@@ -156,6 +156,15 @@ router.post('/asignaturasprograma', function (req, res, err) {
 
         var Curso2 =  require('../models/curso');
         for(i =0; i< data.length; i++){
+            var c = new Curso2({
+                id_asignatura : data[i].id_asignatura,
+                grupo: data[i].id_asignatura,
+                nombre: data[i].nombre_asignatura,
+                id_proyecto : '',
+                id_area: ''
+            });
+            c.save();
+            /*
             Curso2.find({id_asignatura : data[i].id_asignatura, grupo: data[i].grupo}, function (err, resultado) {
                 if(err){
                     return res.status(500).json({
@@ -193,9 +202,13 @@ router.post('/asignaturasprograma', function (req, res, err) {
                     });
                 }
             });
+            */
     }
+        res.status(status).json({
+            message: 'pase '+ status
+        });
 
-
+/*
     Curso2.find(function (err, resultado) {
         if(err){
         return res.status(400).json({
@@ -206,7 +219,7 @@ router.post('/asignaturasprograma', function (req, res, err) {
         mensaje : resultado
     });
     });
-
+*/
     request.open(method, url, async);
 
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
