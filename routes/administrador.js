@@ -143,9 +143,18 @@ router.post('/asignaturasprograma', function (req, res, err) {
                 message: 'Error de peticion: ' + status
             });
         }
+        var c = new curso({
+            id_asignatura : data[0].id_asignatura,
+            grupo : data[0].grupo,
+            nombre: data[0].nombre_asignatura,
+            id_proyecto: '',
+            id_area: ''
+        });
+        c.save();
         res.status(200).json({
            message: data[0]
         });
+
 
     };
     request.open(method, url, async);
