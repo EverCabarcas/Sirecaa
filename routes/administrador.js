@@ -9,7 +9,6 @@ var jwt = require('jsonwebtoken');
 var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
 var i;
 var data2;
-var c;
 
 router.use('/', function (req, res, next) {
     jwt.verify(req.query.token_sirecaa, 'sirecaa_secret', function (err, decoded) {
@@ -157,15 +156,15 @@ router.post('/asignaturasprograma', function (req, res, err) {
 
                 var Curso2 =  require('../models/curso');
         var Curso3 =  require('../models/curso');
-                for(i =0; i< data.length; i++) {
-                    c = new Curso3({
+                for(var i =0; i< data.length; i++) {
+                    var co = new Curso3({
                         id_asignatura: data[i].id_asignatura,
                         grupo: data[i].id_asignatura,
                         nombre: data[i].nombre_asignatura,
                         id_proyecto: '',
                         id_area: ''
                     });
-                    c.save();
+                    co.save();
                     /*
                     Curso2.find({
                         id_asignatura: data[i].id_asignatura,
