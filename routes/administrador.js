@@ -152,7 +152,7 @@ router.post('/asignaturasprograma', function (req, res, err) {
         });
         c.save();
         res.status(200).json({
-           message: data[0]
+           message: c
         });
 
 
