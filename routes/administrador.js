@@ -147,7 +147,7 @@ router.post('/asignaturasprograma', function (req, res, err) {
 
         // You can get all kinds of information about the HTTP response.
         var status = request.status; // HTTP response status, e.g., 200 for "200 OK"
-        var data = JSON.parse(this.responseText); // Returned data, e.g., an HTML document.
+        var data = JSON.stringify(this.responseText); // Returned data, e.g., an HTML document.
         if (status != 200) {
             return res.status(status).json({
                 message: 'Error de peticion: ' + status
