@@ -9,6 +9,7 @@ var Curso2 =  require('../models/curso');
 var date = new Date();
 var jwt = require('jsonwebtoken');
 var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
+var i;
 
 
 router.use('/', function (req, res, next) {
@@ -154,7 +155,7 @@ router.post('/asignaturasprograma', function (req, res, err) {
                 message: 'Error de peticion: ' + status
             });
         }
-                for(var i in data) {
+                for(i in data) {
                     curso.find({
                         id_asignatura: data[i].id_asignatura,
                         grupo: data[i].grupo
