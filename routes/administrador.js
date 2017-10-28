@@ -147,10 +147,10 @@ router.post('/asignaturasprograma', function (req, res, err) {
 
         // You can get all kinds of information about the HTTP response.
         var status = request.status; // HTTP response status, e.g., 200 for "200 OK"
-        var data = JSON.stringify(this.responseText); // Returned data, e.g., an HTML document.
-        if(status != 200){
+        var data = JSON.parse(this.responseText); // Returned data, e.g., an HTML document.
+        if (status != 200) {
             return res.status(status).json({
-                message: 'Error de peticion: '+ status
+                message: 'Error de peticion: ' + status
             });
         }
         /*
@@ -205,21 +205,22 @@ router.post('/asignaturasprograma', function (req, res, err) {
                     */
 
         return res.status(status).json({
-            message: 'pase '+ data
+            message: 'pase ' + data
         });
 
-/*
-    Curso2.find(function (err, resultado) {
-        if(err){
-        return res.status(400).json({
-            message : 'Error en la operacion de cursos '+err
-        });
-        }
-        res.status(200).json({
-        mensaje : resultado
-    });
-    });
-*/
+        /*
+            Curso2.find(function (err, resultado) {
+                if(err){
+                return res.status(400).json({
+                    message : 'Error en la operacion de cursos '+err
+                });
+                }
+                res.status(200).json({
+                mensaje : resultado
+            });
+            });
+        */
+    };
     request.open(method, url, async);
 
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -228,7 +229,7 @@ router.post('/asignaturasprograma', function (req, res, err) {
 
 // Actually sends the request to the server.
     request.send(postData);
-}
+
 });
 
 function horario(re,req) {
