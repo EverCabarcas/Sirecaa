@@ -8,7 +8,6 @@ var Curso2 =  require('../models/curso');
 var date = new Date();
 var jwt = require('jsonwebtoken');
 var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
-var i;
 var data2;
 
 router.use('/', function (req, res, next) {
@@ -220,7 +219,7 @@ router.post('/asignaturasprograma', function (req, res, err) {
                 });
                 }
                 return res.status(200).json({
-                mensaje : resultado2
+                mensaje : data
             });
             });
     };
