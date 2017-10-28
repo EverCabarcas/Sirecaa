@@ -204,7 +204,7 @@ router.post('/asignaturasprograma', function (req, res, err) {
                     });
                     */
 
-        res.status(status).json({
+        return res.status(status).json({
             message: 'pase '+ data
         });
 
