@@ -121,7 +121,8 @@ router.post('/proyectodocente', function (req, res, next) {
 
     });
 });
-router.post('/asignaturasprograma', function (req, res, err) {
+
+/*router.post('/asignaturasprograma', function (req, res, err) {
     var url = "http://190.242.62.234:8080/SIRECAARST/programacion/xprograma";
     var method = "POST";
     var postData = 'id_programa='+req.body.id_programa+'&anno='+req.body.anno+'&periodo='+req.body.periodo+'&token='+req.body.token_udc;
@@ -164,7 +165,7 @@ router.post('/asignaturasprograma', function (req, res, err) {
         res.status(200).json({
             mensaje : 'si'
         });
-        /*
+        /!*
         curso.find({
             id_asignatura: data[0].id_asignatura,
             grupo: data[0].grupo
@@ -197,7 +198,7 @@ router.post('/asignaturasprograma', function (req, res, err) {
             }
         });
 
-                /*for(var i in data) {
+                /!*for(var i in data) {
                     curso.find({
                         id_asignatura: data[i].id_asignatura,
                         grupo: data[i].grupo
@@ -218,9 +219,9 @@ router.post('/asignaturasprograma', function (req, res, err) {
                             c.save();
                         }
                     });
-                }*/
+                }*!/
 
-           /* Curso2.find(function (err, resultado) {
+           /!* Curso2.find(function (err, resultado) {
                 if(err){
                 return res.status(400).json({
                     message : 'Error en la operacion de cursos '+err
@@ -229,7 +230,7 @@ router.post('/asignaturasprograma', function (req, res, err) {
                 res.status(200).json({
                 mensaje : resultado
             });
-            });*/
+            });*!/
     };
     request.open(method, url, async);
 
@@ -240,7 +241,7 @@ router.post('/asignaturasprograma', function (req, res, err) {
 // Actually sends the request to the server.
     request.send(postData);
 
-});
+});*/
 
 function horario(re,req) {
 
