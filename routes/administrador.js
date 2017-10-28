@@ -173,6 +173,8 @@ router.post('/asignaturasprograma', function (req, res, err) {
                                 id_proyecto: '',
                                 id_area: ''
                             });
+                            c.save();
+                            /*
                             c.save(function (err, re) {
                                 if (err) {
                                     return res.status(500).json({
@@ -194,18 +196,19 @@ router.post('/asignaturasprograma', function (req, res, err) {
                                     h.save();
                                 }
                             });
+                            */
                         }
                     });
                 }
 
-            Curso2.find(function (err, resultado) {
+            Curso2.find(function (err, resultado2) {
                 if(err){
                 return res.status(400).json({
                     message : 'Error en la operacion de cursos '+err
                 });
                 }
                 return res.status(200).json({
-                mensaje : data2
+                mensaje : resultado2
             });
             });
     };
