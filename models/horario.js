@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var schema = new Schema({
-    id_asignatura: {type: String, required: true},
+    id_asignatura: {type: Schema.Types.ObjectId, ref: 'Asignatura', required: true},
     grupo: {type: String, required: true},
     dia: {type: String, required: true},
     h_inicio: {type: String, required: true},
