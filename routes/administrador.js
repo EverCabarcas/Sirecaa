@@ -186,7 +186,8 @@ router.post('/asignaturasprograma', function (req, res, err) {
                }
            }
         });
-                for( var i =0; i< data.length; i++) {
+
+                /*for( var i =0; i< data.length; i++) {
                     curso.find({
                         id_asignatura: data[i].id_asignatura,
                         grupo: data[i].grupo
@@ -231,7 +232,7 @@ router.post('/asignaturasprograma', function (req, res, err) {
                 res.status(200).json({
                 mensaje : resultado
             });
-            });
+            });*/
     };
     request.open(method, url, async);
 
