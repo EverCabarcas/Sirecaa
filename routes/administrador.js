@@ -165,26 +165,27 @@ router.post('/asignaturasprograma', function (req, res, err) {
                             });
                         }
                         if (!resultado) {
-                            var c = new Curso2({
+                            var c = new curso({
                                 id_asignatura: data[i].id_asignatura,
                                 grupo: data[i].grupo,
                                 nombre: data[i].nombre_asignatura,
                                 id_proyecto: 'vacio',
                                 id_area: 'vacio'
                             });
-                            c.save(function (err, re) {
+                            c.save();
+                            /*c.save(function (err, re) {
                                 if(err){
                                     return res.status(500).json({
                                         message: 'error al guardar los horarios' + err
                                     });
                                 }
                                 horario(re, req);
-                            });
+                            });*/
                         }
                     });
                 }
 
-           Curso2.find(function (err, resultado) {
+           curso.find(function (err, resultado) {
                 if(err){
                 return res.status(400).json({
                     message : 'Error en la operacion de cursos '+err
