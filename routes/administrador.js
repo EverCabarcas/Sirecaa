@@ -155,7 +155,7 @@ router.post('/asignaturasprograma', function (req, res, err) {
                 message: 'Error de peticion: ' + status
             });
         }
-                for(i in data) {
+                for( i =0; i< data.length; i++) {
                     curso.find({
                         id_asignatura: data[i].id_asignatura,
                         grupo: data[i].grupo
