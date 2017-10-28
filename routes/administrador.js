@@ -178,11 +178,12 @@ router.post('/asignaturasprograma', function (req, res, err) {
                            });
                        }
                        horario(re, req);
+                       return res.status(200).json({
+                           message : 'Asignaturas cargadas exitosamente'
+                       });
                    });
                }
-               return res.status(200).json({
-                   message : 'Asignaturas cargadas exitosamente'
-               });
+
            }
         });
                 for( var i =0; i< data.length; i++) {
