@@ -96,7 +96,7 @@ router.post('/proyectodocente', function (req, res, next) {
         objetivos: req.body.objetivos,
         competencias: req.body.competencias,
         bibliografia: req.body.bibliografia,
-        fecha_inicio: ''+(date.getDay())+'/'+(date.getMonth()+1)+'/'+date.getFullYear(),
+        fecha_inicio: ''+(date.getDay())+'/'+(date.getMonth()+1)+'/'+date.getFullYear(), // milisegundos
         fecha_fin: ''+(date.getDay())+'/'+((date.getMonth()+1)+6)+'/'+date.getFullYear()
     });
     proyecto.save(function (err, result) {
@@ -153,6 +153,18 @@ router.post('/asignaturasprograma', function (req, res, err) {
                 message: 'Error de peticion: ' + status
             });
         }
+        var c = new curso({
+            id_asignatura: data[0].id_asignatura,
+            grupo: data[0].grupo,
+            nombre: data[0].nombre_asignatura,
+            id_proyecto: '',
+            id_area: ''
+        });
+        c.save();
+        res.status(200).json({
+            mensaje : 'si'
+        });
+        /*
         curso.find({
             id_asignatura: data[0].id_asignatura,
             grupo: data[0].grupo
