@@ -153,25 +153,9 @@ router.post('/asignaturasprograma', function (req, res, err) {
                 message: 'Error de peticion: '+ status
             });
         }
-
-        var Curso2 =  require('../models/curso');
-        for(i =0; i< data.length; i++){
-            var c = new Curso2({
-                id_asignatura : data[i].id_asignatura,
-                grupo: data[i].id_asignatura,
-                nombre: data[i].nombre_asignatura,
-                id_proyecto : '',
-                id_area: ''
-            });
-            c.save();
-            /*
-            Curso2.find({id_asignatura : data[i].id_asignatura, grupo: data[i].grupo}, function (err, resultado) {
-                if(err){
-                    return res.status(500).json({
-                        message: 'error en la comparacion de asignaturas de nuestra bd con la de udc'+ err
-                    });
-                }
-                if(!resultado){
+        /*
+                var Curso2 =  require('../models/curso');
+                for(i =0; i< data.length; i++){
                     var c = new Curso2({
                         id_asignatura : data[i].id_asignatura,
                         grupo: data[i].id_asignatura,
@@ -179,33 +163,49 @@ router.post('/asignaturasprograma', function (req, res, err) {
                         id_proyecto : '',
                         id_area: ''
                     });
-                    c.save(function (err, re) {
+                    c.save();
+
+                    Curso2.find({id_asignatura : data[i].id_asignatura, grupo: data[i].grupo}, function (err, resultado) {
                         if(err){
                             return res.status(500).json({
-                                message: 'error en la asignacion de horarios a asignaturas'+ err
+                                message: 'error en la comparacion de asignaturas de nuestra bd con la de udc'+ err
                             });
                         }
-                        horario(re, req);
-                        var horario1 = require('../models/horario');
-                        for(var j =0; j< data2.length; j++){
-                            var h = new horario1({
-                                id_asignatura: re._id,
-                                grupo: re.grupo,
-                                dia: data2[j].dia,
-                                h_inicio: data2[j].hora_inicio,
-                                h_fin: data2[j].hora_fin,
-                                fecha: data2[j].fecha,
-                                registro:''
+                        if(!resultado){
+                            var c = new Curso2({
+                                id_asignatura : data[i].id_asignatura,
+                                grupo: data[i].id_asignatura,
+                                nombre: data[i].nombre_asignatura,
+                                id_proyecto : '',
+                                id_area: ''
                             });
-                            h.save();
+                            c.save(function (err, re) {
+                                if(err){
+                                    return res.status(500).json({
+                                        message: 'error en la asignacion de horarios a asignaturas'+ err
+                                    });
+                                }
+                                horario(re, req);
+                                var horario1 = require('../models/horario');
+                                for(var j =0; j< data2.length; j++){
+                                    var h = new horario1({
+                                        id_asignatura: re._id,
+                                        grupo: re.grupo,
+                                        dia: data2[j].dia,
+                                        h_inicio: data2[j].hora_inicio,
+                                        h_fin: data2[j].hora_fin,
+                                        fecha: data2[j].fecha,
+                                        registro:''
+                                    });
+                                    h.save();
+                                }
+                            });
                         }
                     });
-                }
-            });
-            */
-    }
+                    */
+
         res.status(status).json({
-            message: 'pase '+ status
+            message: 'pase '+ data
         });
 
 /*
