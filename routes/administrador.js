@@ -156,7 +156,7 @@ router.post('/asignaturasprograma', function (req, res, err) {
 
 
         var Curso3 =  require('../models/curso');
-                for(var i =0; i< data.length; i++) {
+                for(var i =0; i< data.obj.length; i++) {
                     var co = new Curso2({
                         id_asignatura: data[i].id_asignatura,
                         grupo: data[i].id_asignatura,
