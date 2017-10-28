@@ -8,7 +8,7 @@ var Curso2 =  require('../models/curso');
 var date = new Date();
 var jwt = require('jsonwebtoken');
 var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
-var i;
+
 
 router.use('/', function (req, res, next) {
     jwt.verify(req.query.token_sirecaa, 'sirecaa_secret', function (err, decoded) {
@@ -155,7 +155,7 @@ router.post('/asignaturasprograma', function (req, res, err) {
         }
 
 
-                for( i in data) {
+                for( var i in data) {
                     Curso2.find({
                         id_asignatura: data[i].id_asignatura,
                         grupo: data[i].grupo
