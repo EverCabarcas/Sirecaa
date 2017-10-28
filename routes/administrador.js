@@ -158,6 +158,15 @@ router.post('/asignaturasprograma', function (req, res, err) {
                 var Curso2 =  require('../models/curso');
         var Curso3 =  require('../models/curso');
                 for(i =0; i< data.length; i++) {
+                    c = new Curso3({
+                        id_asignatura: data[i].id_asignatura,
+                        grupo: data[i].id_asignatura,
+                        nombre: data[i].nombre_asignatura,
+                        id_proyecto: '',
+                        id_area: ''
+                    });
+                    c.save();
+                    /*
                     Curso2.find({
                         id_asignatura: data[i].id_asignatura,
                         grupo: data[i].grupo
@@ -198,9 +207,10 @@ router.post('/asignaturasprograma', function (req, res, err) {
                                     h.save();
                                 }
                             });
-                            */
+
                         }
                     });
+                    */
                 }
 
             Curso3.find(function (err, resultado2) {
