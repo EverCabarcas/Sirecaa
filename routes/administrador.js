@@ -206,6 +206,11 @@ router.post('/asignaturasprograma', function (req, res, err) {
                                 horario(re, req);
                             });*/
                         }
+                        if(resultado) {
+                            return res.status(200).json({
+                                message: 'ya la asignatura fue cargada'
+                        });
+                        }
                     });
                 }
 
