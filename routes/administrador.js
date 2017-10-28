@@ -3,12 +3,12 @@ var router = express.Router();
 var curso = require('../models/curso');
 var area = require('../models/area');
 var proyecto_docente = require('../models/proyecto_docente');
+var Horario = require('../models/horario');
 var Tema = require('../models/tema');
 var Curso2 =  require('../models/curso');
 var date = new Date();
 var jwt = require('jsonwebtoken');
 var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
-
 
 
 router.use('/', function (req, res, next) {
@@ -133,9 +133,20 @@ router.post('/asignaturasprograma', function (req, res, err) {
 
     var request = new XMLHttpRequest();
 
-
+// Before we send anything, we first have to say what we will do when the
+// server responds. This seems backwards (say how we'll respond before we send
+// the request? huh?), but that's how Javascript works.
+// This function attached to the XMLHttpRequest "onload" property specifies how
+// the HTTP response will be handled.
     request.onload = function () {
 
+        // Because of javascript's fabulous closure concept, the XMLHttpRequest "request"
+        // object declared above is available in this function even though this function
+        // executes long after the request is sent and long after this function is
+        // instantiated. This fact is CRUCIAL to the workings of XHR in ordinary
+        // applications.
+
+        // You can get all kinds of information about the HTTP response.
         var status = request.status; // HTTP response status, e.g., 200 for "200 OK"
         var data = JSON.parse(this.responseText); // Returned data, e.g., an HTML document.
         if (status != 200) {
@@ -143,60 +154,55 @@ router.post('/asignaturasprograma', function (req, res, err) {
                 message: 'Error de peticion: ' + status
             });
         }
-        var c = new curso({
-            id_asignatura : data[0].id_asignatura,
-            grupo : data[0].grupo,
-            nombre: data[0].nombre_asignatura,
-            id_proyecto: 'vacio',
-            id_area: 'vacio'
-        });
-        c.save();
-        res.status(200).json({
-           message: c
-        });
+                for(var i in data) {
+                    curso.find({
+                        id_asignatura: data[i].id_asignatura,
+                        grupo: data[i].grupo
+                    }, function (err, resultado) {
+                        if (err) {
+                            return res.status(500).json({
+                                message: 'error en la comparacion de asignaturas de nuestra bd con la de udc' + err
+                            });
+                        }
+                        if (!resultado) {
+                            var c = new Curso2({
+                                id_asignatura: data[i].id_asignatura,
+                                grupo: data[i].grupo,
+                                nombre: data[i].nombre_asignatura,
+                                id_proyecto: '',
+                                id_area: ''
+                            });
+                            c.save(function (err, re) {
+                                if(err){
+                                    return res.status(500).json({
+                                        message: 'error al guardar los horarios' + err
+                                    });
+                                }
+                                horario(re, req);
+                            });
+                        }
+                    });
+                }
 
-
+           Curso2.find(function (err, resultado) {
+                if(err){
+                return res.status(400).json({
+                    message : 'Error en la operacion de cursos '+err
+                });
+                }
+                res.status(200).json({
+                mensaje : resultado
+            });
+            });
     };
     request.open(method, url, async);
 
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+// Or... request.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
+// Or... whatever
 
+// Actually sends the request to the server.
     request.send(postData);
-
-
-    /*for(var i in data) {
-        curso.find({
-            id_asignatura: data[i].id_asignatura,
-            grupo: data[i].grupo
-        }, function (err, resultado) {
-            if (err) {
-                return res.status(500).json({
-                    message: 'error en la comparacion de asignaturas de nuestra bd con la de udc' + err
-                });
-            }
-            if (!resultado) {
-                var c = new Curso2({
-                    id_asignatura: data[i].id_asignatura,
-                    grupo: data[i].grupo,
-                    nombre: data[i].nombre_asignatura,
-                    id_proyecto: '',
-                    id_area: ''
-                });
-                c.save();
-            }
-        });
-    }
-
-    Curso2.find(function (err, resultado) {
-        if(err){
-            return res.status(400).json({
-                message : 'Error en la operacion de cursos '+err
-            });
-        }
-        res.status(200).json({
-            mensaje : resultado
-        });
-    });*/
 
 });
 
@@ -227,10 +233,9 @@ function horario(re,req) {
 
         // You can get all kinds of information about the HTTP response.
         var status = request.status; // HTTP response status, e.g., 200 for "200 OK"
-        var data2 = JSON.parse(this.responseText); // Returned data, e.g., an HTML document.
-        var horario1 = require('../models/horario');
-        for (var j in data2) {
-            var h = new horario1({
+        var data = JSON.parse(this.responseText); // Returned data, e.g., an HTML document.
+        for (var j in data) {
+            var h = new Horario({
                 id_asignatura: re._id,
                 grupo: re.grupo,
                 dia: data2[j].dia,
