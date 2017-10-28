@@ -216,7 +216,7 @@ router.post('/asignaturasprograma', function (req, res, err) {
                         }
                         if(resultado) {
                              res.status(200).json({
-                                message: 'ya la asignatura fue cargada'
+                                message: 'ya la asignatura fue cargada' + resultado
                         });
                         }
                     });
