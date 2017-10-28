@@ -173,14 +173,7 @@ router.post('/asignaturasprograma', function (req, res, err) {
                                 id_proyecto: '',
                                 id_area: ''
                             });
-                            c.save(function (err, re) {
-                                if (err) {
-                                    return res.status(500).json({
-                                        message: 'error en la asignacion de horarios a asignaturas' + err
-                                    });
-                                }
-                                horario(re, req);
-                            });
+                            c.save();
                         }
                     });
                 }
