@@ -276,10 +276,10 @@ function horario(re,req) {
             var h = new Horario({
                 id_asignatura: re._id,
                 grupo: re.grupo,
-                dia: data2[j].dia,
-                h_inicio: data2[j].hora_inicio,
-                h_fin: data2[j].hora_fin,
-                fecha: data2[j].fecha,
+                dia: data[j].dia,
+                h_inicio: data[j].hora_inicio,
+                h_fin: data[j].hora_fin,
+                fecha: data[j].fecha,
                 registro: false
             });
             h.save();
