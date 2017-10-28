@@ -185,9 +185,6 @@ router.post('/asignaturasprograma', function (req, res, err) {
                    });*/
                }
            }
-           return res.status(200).json({
-                message: 'ya esta'
-            });
         });
                 for( var i =0; i< data.length; i++) {
                     curso.find({
