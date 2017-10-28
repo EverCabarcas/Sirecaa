@@ -4,7 +4,7 @@ var curso = require('../models/curso');
 var jwt = require('jsonwebtoken');
 
 router.use('/', function (req, res, next) {
-    jwt.verify(req.query.token, 'sirecaa_secret', function (err, decoded) {
+    jwt.verify(req.query.token_sirecaa, 'sirecaa_secret', function (err, decoded) {
         if (err) {
             return res.status(401).json({
                 title: 'No Autenticado',

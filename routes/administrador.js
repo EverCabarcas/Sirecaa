@@ -8,7 +8,7 @@ var Curso2 =  require('../models/curso');
 var date = new Date();
 var jwt = require('jsonwebtoken');
 var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
-var data2;
+var i;
 
 router.use('/', function (req, res, next) {
     jwt.verify(req.query.token_sirecaa, 'sirecaa_secret', function (err, decoded) {
@@ -155,17 +155,7 @@ router.post('/asignaturasprograma', function (req, res, err) {
         }
 
 
-        var Curso3 =  require('../models/curso');
-                for(var i in data) {
-                    var co = new Curso2({
-                        id_asignatura: data[i].id_asignatura,
-                        grupo: data[i].id_asignatura,
-                        nombre: data[i].nombre_asignatura,
-                        id_proyecto: '',
-                        id_area: ''
-                    });
-                    co.save();
-                    /*
+                for( i in data) {
                     Curso2.find({
                         id_asignatura: data[i].id_asignatura,
                         grupo: data[i].grupo
@@ -176,15 +166,13 @@ router.post('/asignaturasprograma', function (req, res, err) {
                             });
                         }
                         if (!resultado) {
-                             c = new Curso3({
+                            var c = new Curso2({
                                 id_asignatura: data[i].id_asignatura,
-                                grupo: data[i].id_asignatura,
+                                grupo: data[i].grupo,
                                 nombre: data[i].nombre_asignatura,
                                 id_proyecto: '',
                                 id_area: ''
                             });
-                            c.save();
-                            /*
                             c.save(function (err, re) {
                                 if (err) {
                                     return res.status(500).json({
@@ -192,34 +180,19 @@ router.post('/asignaturasprograma', function (req, res, err) {
                                     });
                                 }
                                 horario(re, req);
-                                var horario1 = require('../models/horario');
-                                for (var j = 0; j < data2.length; j++) {
-                                    var h = new horario1({
-                                        id_asignatura: re._id,
-                                        grupo: re.grupo,
-                                        dia: data2[j].dia,
-                                        h_inicio: data2[j].hora_inicio,
-                                        h_fin: data2[j].hora_fin,
-                                        fecha: data2[j].fecha,
-                                        registro: ''
-                                    });
-                                    h.save();
-                                }
                             });
-
                         }
                     });
-                    */
                 }
 
-            Curso2.find(function (err, resultado2) {
+            Curso2.find(function (err, resultado) {
                 if(err){
                 return res.status(400).json({
                     message : 'Error en la operacion de cursos '+err
                 });
                 }
-                return res.status(200).json({
-                mensaje : data
+                res.status(200).json({
+                mensaje : resultado
             });
             });
     };
@@ -242,7 +215,7 @@ function horario(re,req) {
 
 // You REALLY want async = true.
 // Otherwise, it'll block ALL execution waiting for server response.
-    var async = false;
+    var async = true;
 
     var request = new XMLHttpRequest();
 
@@ -261,8 +234,20 @@ function horario(re,req) {
 
         // You can get all kinds of information about the HTTP response.
         var status = request.status; // HTTP response status, e.g., 200 for "200 OK"
-         data2 = JSON.parse(this.responseText); // Returned data, e.g., an HTML document.
-        console.log(data2);
+        var data2 = JSON.parse(this.responseText); // Returned data, e.g., an HTML document.
+        var horario1 = require('../models/horario');
+        for (var j in data2) {
+            var h = new horario1({
+                id_asignatura: re._id,
+                grupo: re.grupo,
+                dia: data2[j].dia,
+                h_inicio: data2[j].hora_inicio,
+                h_fin: data2[j].hora_fin,
+                fecha: data2[j].fecha,
+                registro: false
+            });
+            h.save();
+        }
         /*
         if(status != 200){
             return res.status(status).json({
