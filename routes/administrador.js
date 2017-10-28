@@ -248,6 +248,7 @@ function horario(re,req) {
         // You can get all kinds of information about the HTTP response.
         var status = request.status; // HTTP response status, e.g., 200 for "200 OK"
          data2 = JSON.parse(this.responseText); // Returned data, e.g., an HTML document.
+        console.log(data2);
         /*
         if(status != 200){
             return res.status(status).json({
