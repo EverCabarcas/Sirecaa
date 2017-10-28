@@ -153,41 +153,35 @@ router.post('/asignaturasprograma', function (req, res, err) {
                 message: 'Error de peticion: ' + status
             });
         }
-        /*
-                var Curso2 =  require('../models/curso');
-                for(i =0; i< data.length; i++){
-                    var c = new Curso2({
-                        id_asignatura : data[i].id_asignatura,
-                        grupo: data[i].id_asignatura,
-                        nombre: data[i].nombre_asignatura,
-                        id_proyecto : '',
-                        id_area: ''
-                    });
-                    c.save();
 
-                    Curso2.find({id_asignatura : data[i].id_asignatura, grupo: data[i].grupo}, function (err, resultado) {
-                        if(err){
+                var Curso2 =  require('../models/curso');
+                for(i =0; i< data.length; i++) {
+                    Curso2.find({
+                        id_asignatura: data[i].id_asignatura,
+                        grupo: data[i].grupo
+                    }, function (err, resultado) {
+                        if (err) {
                             return res.status(500).json({
-                                message: 'error en la comparacion de asignaturas de nuestra bd con la de udc'+ err
+                                message: 'error en la comparacion de asignaturas de nuestra bd con la de udc' + err
                             });
                         }
-                        if(!resultado){
+                        if (!resultado) {
                             var c = new Curso2({
-                                id_asignatura : data[i].id_asignatura,
+                                id_asignatura: data[i].id_asignatura,
                                 grupo: data[i].id_asignatura,
                                 nombre: data[i].nombre_asignatura,
-                                id_proyecto : '',
+                                id_proyecto: '',
                                 id_area: ''
                             });
                             c.save(function (err, re) {
-                                if(err){
+                                if (err) {
                                     return res.status(500).json({
-                                        message: 'error en la asignacion de horarios a asignaturas'+ err
+                                        message: 'error en la asignacion de horarios a asignaturas' + err
                                     });
                                 }
                                 horario(re, req);
                                 var horario1 = require('../models/horario');
-                                for(var j =0; j< data2.length; j++){
+                                for (var j = 0; j < data2.length; j++) {
                                     var h = new horario1({
                                         id_asignatura: re._id,
                                         grupo: re.grupo,
@@ -195,31 +189,25 @@ router.post('/asignaturasprograma', function (req, res, err) {
                                         h_inicio: data2[j].hora_inicio,
                                         h_fin: data2[j].hora_fin,
                                         fecha: data2[j].fecha,
-                                        registro:''
+                                        registro: ''
                                     });
                                     h.save();
                                 }
                             });
                         }
                     });
-                    */
+                }
 
-        return res.status(status).json({
-            message:  data
-        });
-
-        /*
             Curso2.find(function (err, resultado) {
                 if(err){
                 return res.status(400).json({
                     message : 'Error en la operacion de cursos '+err
                 });
                 }
-                res.status(200).json({
+                return res.status(200).json({
                 mensaje : resultado
             });
             });
-        */
     };
     request.open(method, url, async);
 
@@ -259,7 +247,7 @@ function horario(re,req) {
 
         // You can get all kinds of information about the HTTP response.
         var status = request.status; // HTTP response status, e.g., 200 for "200 OK"
-         data2 = JSON.stringify(this.responseText); // Returned data, e.g., an HTML document.
+         data2 = JSON.parse(this.responseText); // Returned data, e.g., an HTML document.
         /*
         if(status != 200){
             return res.status(status).json({
