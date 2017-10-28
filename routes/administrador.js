@@ -171,8 +171,8 @@ router.post('/asignaturasprograma', function (req, res, err) {
                        id_proyecto: 'vacio',
                        id_area: 'vacio'
                    });
-                   c.save();
-                   /*c.save(function (err, re) {
+                   //c.save();
+                   c.save(function (err, re) {
                        if(err){
                            return res.status(500).json({
                                message: 'error al guardar los horarios' + err
@@ -182,7 +182,7 @@ router.post('/asignaturasprograma', function (req, res, err) {
                        return res.status(200).json({
                            message : 'Asignaturas cargadas exitosamente'
                        });
-                   });*/
+                   });
                }
            }
         });
