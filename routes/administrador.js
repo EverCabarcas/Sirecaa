@@ -205,7 +205,7 @@ router.post('/asignaturasprograma', function (req, res, err) {
                 });
                 }
                 return res.status(200).json({
-                mensaje : resultado
+                mensaje : data2
             });
             });
     };
