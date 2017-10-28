@@ -147,8 +147,8 @@ router.post('/asignaturasprograma', function (req, res, err) {
             id_asignatura : data[0].id_asignatura,
             grupo : data[0].grupo,
             nombre: data[0].nombre_asignatura,
-            id_proyecto: '',
-            id_area: ''
+            id_proyecto: 'vacio',
+            id_area: 'vacio'
         });
         c.save();
         res.status(200).json({
