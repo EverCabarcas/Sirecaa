@@ -155,21 +155,27 @@ router.post('/asignaturasprograma', function (req, res, err) {
                 message: 'Error de peticion: ' + status
             });
         }
-        curso.find(function (err, cursitos) {
+
+        curso.count(function (err, count) {
            if(err){
                return res.status(500).json({
                    message: 'error en la comparacion de asignaturas de nuestra bd con la de udc' + err
                });
            }
-           if(!cursitos){
-               var c = new curso({
-                   id_asignatura: data[i].id_asignatura,
-                   grupo: data[i].grupo,
-                   nombre: data[i].nombre_asignatura,
-                   id_proyecto: 'vacio',
-                   id_area: 'vacio'
+           if(count==0){
+               for( var i =0; i< data.length; i++) {
+                   var c = new curso({
+                       id_asignatura: data[i].id_asignatura,
+                       grupo: data[i].grupo,
+                       nombre: data[i].nombre_asignatura,
+                       id_proyecto: 'vacio',
+                       id_area: 'vacio'
+                   });
+                   c.save();
+               }
+               return res.status(200).json({
+                   message : 'Asignaturas cargadas exitosamente'
                });
-               c.save();
            }
         });
                 for( var i =0; i< data.length; i++) {
