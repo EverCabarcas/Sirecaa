@@ -8,7 +8,7 @@ var Curso2 =  require('../models/curso');
 var date = new Date();
 var jwt = require('jsonwebtoken');
 var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
-var data;
+
 
 
 router.use('/', function (req, res, next) {
@@ -137,12 +137,15 @@ router.post('/asignaturasprograma', function (req, res, err) {
     request.onload = function () {
 
         var status = request.status; // HTTP response status, e.g., 200 for "200 OK"
-        data = JSON.parse(this.responseText); // Returned data, e.g., an HTML document.
+        var data = JSON.parse(this.responseText); // Returned data, e.g., an HTML document.
         if (status != 200) {
             return res.status(status).json({
                 message: 'Error de peticion: ' + status
             });
         }
+        res.status(200).json({
+           message: data[0]
+        });
 
     };
     request.open(method, url, async);
@@ -151,37 +154,6 @@ router.post('/asignaturasprograma', function (req, res, err) {
 
     request.send(postData);
 
-    curso.find({
-        id_asignatura: data[0].id_asignatura,
-        grupo: data[0].grupo
-    }, function (err, resultado) {
-        if (err) {
-            return res.status(500).json({
-                message: 'error en la comparacion de asignaturas de nuestra bd con la de udc' + err
-            });
-        }
-        if (!resultado) {
-            var c = new curso({
-                id_asignatura: data[0].id_asignatura,
-                grupo: data[0].grupo,
-                nombre: data[0].nombre_asignatura,
-                id_proyecto: '',
-                id_area: ''
-            });
-            c.save(function (err, r) {
-                if(err){
-                    return res.status(500).json({
-                        mensaje : 'No guardo'
-                    });
-                }
-                res.status(200).json({
-                    mensaje : 'si guardo'
-                });
-            });
-
-
-        }
-    });
 
     /*for(var i in data) {
         curso.find({
