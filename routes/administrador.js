@@ -272,7 +272,7 @@ function horario(re,req) {
         // You can get all kinds of information about the HTTP response.
         var status = request.status; // HTTP response status, e.g., 200 for "200 OK"
         var data = JSON.parse(this.responseText); // Returned data, e.g., an HTML document.
-        for (var j in data) {
+        for( var j =0; j< data.length; j++) {
             var h = new Horario({
                 id_asignatura: re._id,
                 grupo: re.grupo,
