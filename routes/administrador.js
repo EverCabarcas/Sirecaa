@@ -4,6 +4,7 @@ var curso = require('../models/curso');
 var area = require('../models/area');
 var proyecto_docente = require('../models/proyecto_docente');
 var Tema = require('../models/tema');
+var Curso2 =  require('../models/curso');
 var date = new Date();
 var jwt = require('jsonwebtoken');
 var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
@@ -154,10 +155,10 @@ router.post('/asignaturasprograma', function (req, res, err) {
             });
         }
 
-                var Curso2 =  require('../models/curso');
+
         var Curso3 =  require('../models/curso');
                 for(var i =0; i< data.length; i++) {
-                    var co = new Curso3({
+                    var co = new Curso2({
                         id_asignatura: data[i].id_asignatura,
                         grupo: data[i].id_asignatura,
                         nombre: data[i].nombre_asignatura,
@@ -212,7 +213,7 @@ router.post('/asignaturasprograma', function (req, res, err) {
                     */
                 }
 
-            Curso3.find(function (err, resultado2) {
+            Curso2.find(function (err, resultado2) {
                 if(err){
                 return res.status(400).json({
                     message : 'Error en la operacion de cursos '+err
