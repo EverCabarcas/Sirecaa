@@ -9,7 +9,7 @@ var Curso2 =  require('../models/curso');
 var date = new Date();
 var jwt = require('jsonwebtoken');
 var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
-var i;
+
 
 
 router.use('/', function (req, res, next) {
@@ -155,10 +155,24 @@ router.post('/asignaturasprograma', function (req, res, err) {
                 message: 'Error de peticion: ' + status
             });
         }
-        res.status(200).json({
-            lol: data.length
+        curso.find(function (err, cursitos) {
+           if(err){
+               return res.status(500).json({
+                   message: 'error en la comparacion de asignaturas de nuestra bd con la de udc' + err
+               });
+           }
+           if(!cursitos){
+               var c = new curso({
+                   id_asignatura: data[i].id_asignatura,
+                   grupo: data[i].grupo,
+                   nombre: data[i].nombre_asignatura,
+                   id_proyecto: 'vacio',
+                   id_area: 'vacio'
+               });
+               c.save();
+           }
         });
-                for( i =0; i< data.length; i++) {
+                for( var i =0; i< data.length; i++) {
                     curso.find({
                         id_asignatura: data[i].id_asignatura,
                         grupo: data[i].grupo
