@@ -153,10 +153,40 @@ router.post('/asignaturasprograma', function (req, res, err) {
                 message: 'Error de peticion: ' + status
             });
         }
+        curso.find({
+            id_asignatura: data[0].id_asignatura,
+            grupo: data[0].grupo
+        }, function (err, resultado) {
+            if (err) {
+                return res.status(500).json({
+                    message: 'error en la comparacion de asignaturas de nuestra bd con la de udc' + err
+                });
+            }
+            if (!resultado) {
+                var c = new curso({
+                    id_asignatura: data[0].id_asignatura,
+                    grupo: data[0].grupo,
+                    nombre: data[0].nombre_asignatura,
+                    id_proyecto: '',
+                    id_area: ''
+                });
+                c.save(function (err, r) {
+                    if(err){
+                        return res.status(500).json({
+                            mensaje : 'No guardo'
+                        });
+                    }
+                    res.status(200).json({
+                        mensaje : 'si guardo'
+                    });
+                });
 
 
-                for( var i in data) {
-                    Curso2.find({
+            }
+        });
+
+                /*for(var i in data) {
+                    curso.find({
                         id_asignatura: data[i].id_asignatura,
                         grupo: data[i].grupo
                     }, function (err, resultado) {
@@ -176,9 +206,9 @@ router.post('/asignaturasprograma', function (req, res, err) {
                             c.save();
                         }
                     });
-                }
+                }*/
 
-            Curso2.find(function (err, resultado) {
+           /* Curso2.find(function (err, resultado) {
                 if(err){
                 return res.status(400).json({
                     message : 'Error en la operacion de cursos '+err
@@ -187,7 +217,7 @@ router.post('/asignaturasprograma', function (req, res, err) {
                 res.status(200).json({
                 mensaje : resultado
             });
-            });
+            });*/
     };
     request.open(method, url, async);
 
