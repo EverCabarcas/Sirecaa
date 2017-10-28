@@ -9,6 +9,7 @@ var jwt = require('jsonwebtoken');
 var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
 var i;
 var data2;
+var c;
 
 router.use('/', function (req, res, next) {
     jwt.verify(req.query.token_sirecaa, 'sirecaa_secret', function (err, decoded) {
@@ -155,6 +156,7 @@ router.post('/asignaturasprograma', function (req, res, err) {
         }
 
                 var Curso2 =  require('../models/curso');
+        var Curso3 =  require('../models/curso');
                 for(i =0; i< data.length; i++) {
                     Curso2.find({
                         id_asignatura: data[i].id_asignatura,
@@ -166,7 +168,7 @@ router.post('/asignaturasprograma', function (req, res, err) {
                             });
                         }
                         if (!resultado) {
-                            var c = new Curso2({
+                             c = new Curso3({
                                 id_asignatura: data[i].id_asignatura,
                                 grupo: data[i].id_asignatura,
                                 nombre: data[i].nombre_asignatura,
@@ -201,7 +203,7 @@ router.post('/asignaturasprograma', function (req, res, err) {
                     });
                 }
 
-            Curso2.find(function (err, resultado2) {
+            Curso3.find(function (err, resultado2) {
                 if(err){
                 return res.status(400).json({
                     message : 'Error en la operacion de cursos '+err
