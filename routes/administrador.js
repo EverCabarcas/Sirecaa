@@ -173,10 +173,7 @@ router.post('/asignaturasprograma', function (req, res, err) {
     request.open(method, url, async);
 
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-// Or... request.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
-// Or... whatever
 
-// Actually sends the request to the server.
     request.send(postData);
 
 });
