@@ -163,7 +163,7 @@ router.post('/asignaturasprograma', function (req, res, next) {
                                message: 'error al guardar los horarios' + err
                            });
                        }
-                      horario(respuesta,req);
+                      horario(respuesta,req, res);
                    });
                }
            }
