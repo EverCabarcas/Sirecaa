@@ -177,7 +177,7 @@ router.post('/asignaturasprograma', function (req, res, next) {
 
 });
 
-function horario(respuesta, req) {
+function horario(respuesta, req, res) {
     var url = "http://190.242.62.234:8080/SIRECAARST/programacion/horario";
     var method = "POST";
     var postData = 'id_asignatura='+respuesta.id_asignatura+'&grupo='+respuesta.grupo+'&anno='+req.body.anno+'&periodo='+req.body.periodo+'&token='+req.body.token_udc;
@@ -208,7 +208,7 @@ function horario(respuesta, req) {
             });
             h.save();
         }
-        res.status(200).json({
+        return res.status(200).json({
             message: 'pase'
         });
 
