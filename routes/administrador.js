@@ -122,7 +122,8 @@ router.post('/proyectodocente', function (req, res, next) {
 
     });
 });
-router.post('/asignaturasprograma', function (req, res, next) {
+
+/*router.post('/asignaturasprograma', function (req, res, next) {
     var url = "http://190.242.62.234:8080/SIRECAARST/programacion/xprograma";
     var method = "POST";
     var postData = 'id_programa='+req.body.id_programa+'&anno='+req.body.anno+'&periodo='+req.body.periodo+'&token='+req.body.token_udc;
@@ -176,6 +177,6 @@ router.post('/asignaturasprograma', function (req, res, next) {
 
     request.send(postData);
 
-});
+});*/
 
 module.exports = router;
