@@ -157,15 +157,13 @@ router.post('/asignaturasprograma', function (req, res, next) {
                        id_proyecto: 'vacio',
                        id_area: 'vacio'
                    });
-                   c.save(function (err, re) {
+                   c.save(function (err, respuesta) {
                        if(err){
                            return res.status(500).json({
                                message: 'error al guardar los horarios' + err
                            });
                        }
-                      /* res.status(200).json({
-                           mensaje : re
-                       });*/
+                      horario(respuesta,req);
                    });
                }
            }
@@ -178,5 +176,46 @@ router.post('/asignaturasprograma', function (req, res, next) {
     request.send(postData);
 
 });
+
+function horario(respuesta, req) {
+    var url = "http://190.242.62.234:8080/SIRECAARST/programacion/horario";
+    var method = "POST";
+    var postData = 'id_asignatura='+respuesta.id_asignatura+'&grupo='+respuesta.grupo+'&anno='+req.body.anno+'&periodo='+req.body.periodo+'&token='+req.body.token_udc;
+
+    var async = true;
+
+    var request = new XMLHttpRequest();
+
+    request.onload = function () {
+
+        var status = request.status; // HTTP response status, e.g., 200 for "200 OK"
+        var data = JSON.parse(this.responseText); // Returned data, e.g., an HTML document.
+        if (status != 200) {
+            return res.status(status).json({
+                message: 'Error de peticion: ' + status
+            });
+        }
+
+        for( var i =0; i< data.length; i++) {
+            var h = new Horario({
+                id_asignatura: respuesta._id,
+                grupo: data[i].grupo,
+                dia: data[i].dia,
+                h_inicio: data[i].hora_inicio,
+                h_fin: data[i].hora_fin,
+                fecha: data[i].fecha,
+                registro: false
+            });
+            h.save();
+        }
+
+
+    };
+    request.open(method, url, async);
+
+    request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+    request.send(postData);
+}
 
 module.exports = router;
