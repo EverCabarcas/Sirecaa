@@ -128,26 +128,12 @@ router.post('/asignaturasprograma', function (req, res, err) {
     var method = "POST";
     var postData = 'id_programa='+req.body.id_programa+'&anno='+req.body.anno+'&periodo='+req.body.periodo+'&token='+req.body.token_udc;
 
-// You REALLY want async = true.
-// Otherwise, it'll block ALL execution waiting for server response.
     var async = true;
 
     var request = new XMLHttpRequest();
 
-// Before we send anything, we first have to say what we will do when the
-// server responds. This seems backwards (say how we'll respond before we send
-// the request? huh?), but that's how Javascript works.
-// This function attached to the XMLHttpRequest "onload" property specifies how
-// the HTTP response will be handled.
     request.onload = function () {
 
-        // Because of javascript's fabulous closure concept, the XMLHttpRequest "request"
-        // object declared above is available in this function even though this function
-        // executes long after the request is sent and long after this function is
-        // instantiated. This fact is CRUCIAL to the workings of XHR in ordinary
-        // applications.
-
-        // You can get all kinds of information about the HTTP response.
         var status = request.status; // HTTP response status, e.g., 200 for "200 OK"
         var data = JSON.parse(this.responseText); // Returned data, e.g., an HTML document.
         if (status != 200) {
@@ -171,68 +157,19 @@ router.post('/asignaturasprograma', function (req, res, err) {
                        id_proyecto: 'vacio',
                        id_area: 'vacio'
                    });
-                   c.save();
-                   /*c.save(function (err, re) {
+                   c.save(function (err, re) {
                        if(err){
                            return res.status(500).json({
                                message: 'error al guardar los horarios' + err
                            });
                        }
-                       horario(re, req);
-                       /!*return res.status(200).json({
-                           message : 'Asignaturas cargadas exitosamente'
-                       });*!/
-                   });*/
+                       res.status(200).json({
+                           mensaje : re
+                       });
+                   });
                }
            }
         });
-
-                /*for( var i =0; i< data.length; i++) {
-                    curso.find({
-                        id_asignatura: data[i].id_asignatura,
-                        grupo: data[i].grupo
-                    }, function (err, resultado) {
-                        if (err) {
-                            return res.status(500).json({
-                                message: 'error en la comparacion de asignaturas de nuestra bd con la de udc' + err
-                            });
-                        }
-                        if (!resultado) {
-                            var c = new curso({
-                                id_asignatura: data[i].id_asignatura,
-                                grupo: data[i].grupo,
-                                nombre: data[i].nombre_asignatura,
-                                id_proyecto: 'vacio',
-                                id_area: 'vacio'
-                            });
-                            //c.save();
-                            c.save(function (err, re) {
-                                if(err){
-                                    return res.status(500).json({
-                                        message: 'error al guardar los horarios' + err
-                                    });
-                                }
-                                horario(re, req);
-                            });
-                        }
-                        if(resultado) {
-                             res.status(200).json({
-                                message: 'ya la asignatura fue cargada' + resultado
-                        });
-                        }
-                    });
-                }
-
-           curso.find(function (err, resultado) {
-                if(err){
-                return res.status(400).json({
-                    message : 'Error en la operacion de cursos '+err
-                });
-                }
-                res.status(200).json({
-                mensaje : resultado
-            });
-            });*/
     };
     request.open(method, url, async);
 
