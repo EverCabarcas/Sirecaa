@@ -166,6 +166,33 @@ router.post('/asignaturasprograma', function (req, res, next) {
                       horario(respuesta,req, res);
                    });
                }
+           }else{
+               for( var i =0; i< data.length; i++) {
+                   curso.find({id_asignatura: data[i].id_asignatura, grupo: data[i].grupo}, function (err, resultado) {
+                       if(err){
+                           return res.status(500).json({
+                               message: 'error al guardar los horarios' + err
+                           });
+                       }
+                       if(!resultado){
+                           var c = new curso({
+                               id_asignatura: data[i].id_asignatura,
+                               grupo: data[i].grupo,
+                               nombre: data[i].nombre_asignatura,
+                               id_proyecto: 'vacio',
+                               id_area: 'vacio'
+                           });
+                           c.save(function (err, respuesta) {
+                               if(err){
+                                   return res.status(500).json({
+                                       message: 'error al guardar los horarios' + err
+                                   });
+                               }
+                               horario(respuesta,req, res);
+                           });
+                       }
+                   });
+               }
            }
         });
     };
