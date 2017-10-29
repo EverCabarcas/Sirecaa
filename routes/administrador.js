@@ -176,7 +176,7 @@ router.post('/asignaturasprograma', function (req, res, next) {
                                message: 'error al guardar los horarios' + err
                            });
                        }
-                       if(resultado == ' '){
+                       if(resultado.empty){
                            res.status(500).json({
                                message: 'si pase'
                            });
