@@ -9,4 +9,4 @@ var schema = new Schema({
     id_area: {type: String, required: true}
 });
 
-module.exports = mongoose.model('Asignatura', schema);
+module.exports = mongoose.model('Curso', schema);
