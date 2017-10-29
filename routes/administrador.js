@@ -6,6 +6,7 @@ var proyecto_docente = require('../models/proyecto_docente');
 var Horario = require('../models/horario');
 var Tema = require('../models/tema');
 var date = new Date();
+var j;
 var jwt = require('jsonwebtoken');
 var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
 
@@ -167,8 +168,8 @@ router.post('/asignaturasprograma', function (req, res, next) {
                    });
                }
            }else{
-               for( var i =0; i< data.length; i++) {
-                   curso.find({id_asignatura: data[i].id_asignatura, grupo: data[i].grupo}, function (err, resultado) {
+               for( j =0; j< data.length; j++) {
+                   curso.find({id_asignatura: data[j].id_asignatura, grupo: data[j].grupo}, function (err, resultado) {
                        if(err){
                            return res.status(500).json({
                                message: 'error al guardar los horarios' + err
@@ -179,9 +180,9 @@ router.post('/asignaturasprograma', function (req, res, next) {
                                message: 'si pase'
                            });
                            var c = new curso({
-                               id_asignatura: data[i].id_asignatura,
-                               grupo: data[i].grupo,
-                               nombre: data[i].nombre_asignatura,
+                               id_asignatura: data[j].id_asignatura,
+                               grupo: data[j].grupo,
+                               nombre: data[j].nombre_asignatura,
                                id_proyecto: 'vacio',
                                id_area: 'vacio'
                            });
