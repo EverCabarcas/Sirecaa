@@ -203,7 +203,7 @@ function horario() {
     request.open(method, url, async);
 
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-}
+
     request.send(postData);
 }
 
