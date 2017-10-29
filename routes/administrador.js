@@ -5,7 +5,6 @@ var area = require('../models/area');
 var proyecto_docente = require('../models/proyecto_docente');
 var Horario = require('../models/horario');
 var Tema = require('../models/tema');
-var Curso2 =  require('../models/curso');
 var date = new Date();
 var jwt = require('jsonwebtoken');
 var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
@@ -181,30 +180,5 @@ router.post('/asignaturasprograma', function (req, res, err) {
     request.send(postData);
 
 });
-
-function horario() {
-
-    var url = "http://190.242.62.234:8080/SIRECAARST/programacion/horario";
-    var method = "POST";
-    var postData = 'id_asignatura=' + re.id_asignatura + '&grupo=' + re.grupo + '&anno=' + req.body.anno + '&periodo=' + req.body.periodo + '&token=' + req.body.token_udc;
-
-// You REALLY want async = true.
-// Otherwise, it'll block ALL execution waiting for server response.
-    var async = true;
-
-    var request = new XMLHttpRequest();
-
-    request.onload = function () {
-
-        var data = JSON.parse(this.responseText); // Returned data, e.g., an HTML document.
-
-    };
-
-    request.open(method, url, async);
-
-    request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-    request.send(postData);
-}
 
 module.exports = router;
