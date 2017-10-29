@@ -208,9 +208,6 @@ function horario(respuesta, req, res) {
             });
             h.save();
         }
-        return res.status(200).json({
-            message: 'pase'
-        });
 
 
     };
