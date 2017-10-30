@@ -167,6 +167,9 @@ router.post('/asignaturasprograma', function (req, res, next) {
                         horario(respuesta, req, res);
                     });
                 }
+                return res.status(200).json({
+                    message: 'Periodo academico iniciado con exito: falta el nombre del programa'
+                });
             }
        /*     if (count != 0){
                 var bol = false;
