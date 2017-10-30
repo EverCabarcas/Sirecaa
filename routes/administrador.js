@@ -177,14 +177,14 @@ router.post('/asignaturasprograma', function (req, res, next) {
                            });
                        }
                        if(!resultado.length){
-                           var c = new curso({
+                           var co = new curso({
                                id_asignatura: 'vacio',
                                grupo: data[j].grupo,
                                nombre: data[j].nombre_asignatura,
                                id_proyecto: 'vacio',
                                id_area: 'vacio'
                            });
-                           c.save(function (err, respuesta) {
+                           co.save(function (err, respuesta) {
                                if(err){
                                    return res.status(500).json({
                                        message: 'error al guardar los horarios' + err
