@@ -188,6 +188,9 @@ router.post('/asignaturasprograma', function (req, res, next) {
                             }
                     });
                     if(cur == 'vacio'){
+                        res.status(500).json({
+                            message: data
+                        });
                         var co = new curso({
                             id_asignatura: data[j].id_asignatura,
                             grupo: data[j].grupo,
