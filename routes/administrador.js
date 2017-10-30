@@ -184,7 +184,7 @@ router.post('/asignaturasprograma', function (req, res, next) {
                         }
                             if(!resultado.length){
                                  res.status(500).json({
-                                    message: data
+                                    message: data[j]
                                 });
                                 /*var co = new curso({
                                     id_asignatura: data[j].id_asignatura,
