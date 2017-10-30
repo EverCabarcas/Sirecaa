@@ -180,7 +180,7 @@ router.post('/asignaturasprograma', function (req, res, next) {
                                 message: 'error al guardar los horarios' + err
                             });
                         }
-                            if(!resultado.length){
+                            if(resultado){
                                bol = true;
                             }
                     });
