@@ -177,9 +177,6 @@ router.post('/asignaturasprograma', function (req, res, next) {
                            });
                        }
                        if(!resultado.length){
-                           res.status(500).json({
-                               message: 'si pase'
-                           });
                            var c = new curso({
                                id_asignatura: data[j].id_asignatura,
                                grupo: data[j].grupo,
