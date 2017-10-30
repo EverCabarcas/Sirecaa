@@ -172,7 +172,7 @@ router.post('/asignaturasprograma', function (req, res, next) {
             }
             if (count != 0){
                 for ( var j = 0; j < data.length; j++) {
-
+                    const x = j;
                     curso.find({
                         id_asignatura: data[j].id_asignatura,
                         grupo: data[j].grupo
@@ -184,7 +184,7 @@ router.post('/asignaturasprograma', function (req, res, next) {
                         }
                             if(!resultado.length){
                                  res.status(500).json({
-                                    message: data[j]
+                                    message: data[x]
                                 });
                                 /*var co = new curso({
                                     id_asignatura: data[j].id_asignatura,
