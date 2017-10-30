@@ -184,13 +184,12 @@ router.post('/asignaturasprograma', function (req, res, next) {
                             });
                         }
 
-                            a = resultado;
-
+                        res.status(500).json({
+                            message: resultado
+                        });
 
                     });
-                    res.status(500).json({
-                        message: a
-                    });
+
 
                         /*var co = new curso({
                             id_asignatura: data[j].id_asignatura,
