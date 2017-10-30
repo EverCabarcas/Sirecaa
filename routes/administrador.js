@@ -183,12 +183,7 @@ router.post('/asignaturasprograma', function (req, res, next) {
                                 message: 'error al guardar los horarios' + err
                             });
                         }
-
-                        res.status(500).json({
-                            message: resultado
-                        });
-
-
+                        asignacion(resultado);
                     });
 
 
