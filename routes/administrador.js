@@ -175,6 +175,9 @@ router.post('/asignaturasprograma', function (req, res, next) {
                 for ( var j = 0; j < data.length; j++) {
                     var a = curso.find({id_asignatura: data[j].id_asignatura, grupo: data[j].grupo});
                     if(!a.length){
+                        return res.status(500).json({
+                            message: a
+                        });
                         var co = new curso({
                           id_asignatura: data[j].id_asignatura,
                           grupo: data[j].grupo,
@@ -248,12 +251,5 @@ function horario(respuesta, req, res) {
     request.send(postData);
 }
 
-function asignacion(resultado) {
-   if(!resultado){
-       return 'no hay resultado'
-   }else {
-       return 'si hay resultado'
-   }
-}
 
 module.exports = router;
