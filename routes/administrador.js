@@ -174,7 +174,7 @@ router.post('/asignaturasprograma', function (req, res, next) {
             if (count != 0){
                 for ( var j = 0; j < data.length; j++) {
                     var a = curso.find({id_asignatura: data[j].id_asignatura, grupo: data[j].grupo});
-                    if(!a){
+                    if(!a.length){
                         return res.status(500).json({
                             message: 'no se encuntra nada'
                         });
