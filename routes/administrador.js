@@ -173,22 +173,12 @@ router.post('/asignaturasprograma', function (req, res, next) {
             }
             if (count != 0){
                 for ( var j = 0; j < data.length; j++) {
-                    curso.find({
-                        id_asignatura: data[j].id_asignatura,
-                        grupo: data[j].grupo
-                    }, function (err,resultado) {
-                        if (err) {
-                            return res.status(500).json({
-                                message: 'error al guardar los horarios' + err
-                            });
-                        }
-
-                            return res.status(500).json({
-                                message: asignacion(resultado)
-                            });
-
-
-                    });
+                    var a = curso.find({id_asignatura: data[j].id_asignatura, grupo: data[j].grupo});
+                    if(!a){
+                        return res.status(500).json({
+                            message: 'no se encuntra nada'
+                        });
+                    }
                         /*var co = new curso({
                             id_asignatura: data[j].id_asignatura,
                             grupo: data[j].grupo,
