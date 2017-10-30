@@ -7,6 +7,7 @@ var Horario = require('../models/horario');
 var Tema = require('../models/tema');
 var date = new Date();
 var data2;
+var j;
 var jwt = require('jsonwebtoken');
 var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
 
@@ -145,61 +146,65 @@ router.post('/asignaturasprograma', function (req, res, next) {
         }
 
         curso.count(function (err, count) {
-           if(err){
-               return res.status(500).json({
-                   message: 'error en la comparacion de asignaturas de nuestra bd con la de udc' + err
-               });
-           }
-           if(count==0){
-               for( var i =0; i< data.length; i++) {
-                   var c = new curso({
-                       id_asignatura: data[i].id_asignatura,
-                       grupo: data[i].grupo,
-                       nombre: data[i].nombre_asignatura,
-                       id_proyecto: 'vacio',
-                       id_area: 'vacio'
-                   });
-                   c.save(function (err, respuesta) {
-                       if(err){
-                           return res.status(500).json({
-                               message: 'error al guardar los horarios' + err
-                           });
-                       }
-                      horario(respuesta,req, res);
-                   });
-               }
-           }
+            if (err) {
+                return res.status(500).json({
+                    message: 'error en la comparacion de asignaturas de nuestra bd con la de udc' + err
+                });
+            }
+            if (count == 0) {
+                for (var i = 0; i < data.length; i++) {
+                    var c = new curso({
+                        id_asignatura: data[i].id_asignatura,
+                        grupo: data[i].grupo,
+                        nombre: data[i].nombre_asignatura,
+                        id_proyecto: 'vacio',
+                        id_area: 'vacio'
+                    });
+                    c.save(function (err, respuesta) {
+                        if (err) {
+                            return res.status(500).json({
+                                message: 'error al guardar los horarios' + err
+                            });
+                        }
+                        horario(respuesta, req, res);
+                    });
+                }
+            }
+            if (count != 0){
+                for ( j = 0; j < data2.length; j++) {
+                    curso.find({
+                        id_asignatura: data2[j].id_asignatura,
+                        grupo: data2[j].grupo
+                    }, function (err, resultado) {
+                        if (err) {
+                            return res.status(500).json({
+                                message: 'error al guardar los horarios' + err
+                            });
+                        }
+                        res.status(200).json({
+                            message: resultado
+                        });
+                        if(!resultado.length){
+                            var co = new curso({
+                                id_asignatura: data2[j].id_asignatura,
+                                grupo: data2[j].grupo,
+                                nombre: data2[j].nombre_asignatura,
+                                id_proyecto: 'vacio',
+                                id_area: 'vacio'
+                            });
+                            co.save(function (err, respuesta) {
+                                if(err){
+                                    return res.status(500).json({
+                                        message: 'error al guardar los horarios' + err
+                                    });
+                                }
+                                horario(respuesta,req, res);
+                            });
+                        }
 
-               for( var j =0; j< data2.length; j++) {
-                   curso.find({id_asignatura: data2[j].id_asignatura, grupo: data2[j].grupo}, function (err, resultado) {
-                       if(err){
-                           return res.status(500).json({
-                               message: 'error al guardar los horarios' + err
-                           });
-                       }
-                       res.status(200).json({
-                           message: resultado
-                       });
-                       /*if(!resultado.length){
-                           var co = new curso({
-                               id_asignatura: data2[j].id_asignatura,
-                               grupo: data2[j].grupo,
-                               nombre: data2[j].nombre_asignatura,
-                               id_proyecto: 'vacio',
-                               id_area: 'vacio'
-                           });
-                           co.save(function (err, respuesta) {
-                               if(err){
-                                   return res.status(500).json({
-                                       message: 'error al guardar los horarios' + err
-                                   });
-                               }
-                               horario(respuesta,req, res);
-                           });
-                       }*/
-
-                   });
-               }
+                    });
+                }
+        }
 
         });
     };
