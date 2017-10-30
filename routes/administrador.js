@@ -6,7 +6,7 @@ var proyecto_docente = require('../models/proyecto_docente');
 var Horario = require('../models/horario');
 var Tema = require('../models/tema');
 var date = new Date();
-var j;
+var data2;
 var jwt = require('jsonwebtoken');
 var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
 
@@ -137,6 +137,7 @@ router.post('/asignaturasprograma', function (req, res, next) {
 
         var status = request.status; // HTTP response status, e.g., 200 for "200 OK"
         var data = JSON.parse(this.responseText); // Returned data, e.g., an HTML document.
+        data2 = JSON.parse(this.responseText);
         if (status != 200) {
             return res.status(status).json({
                 message: 'Error de peticion: ' + status
@@ -168,11 +169,9 @@ router.post('/asignaturasprograma', function (req, res, next) {
                    });
                }
            }
-            res.status(500).json({
-                message: data
-            });
-               for( var j =0; j< data.length; j++) {
-                   curso.find({id_asignatura: data[j].id_asignatura, grupo: data[j].grupo}, function (err, resultado) {
+
+               for( var j =0; j< data2.length; j++) {
+                   curso.find({id_asignatura: data2[j].id_asignatura, grupo: data2[j].grupo}, function (err, resultado) {
                        if(err){
                            return res.status(500).json({
                                message: 'error al guardar los horarios' + err
@@ -180,9 +179,9 @@ router.post('/asignaturasprograma', function (req, res, next) {
                        }
                        if(!resultado.length){
                            var co = new curso({
-                               id_asignatura: 'vacio',
-                               grupo: data[j].grupo,
-                               nombre: data[j].nombre_asignatura,
+                               id_asignatura: data2[j].id_asignatura,
+                               grupo: data2[j].grupo,
+                               nombre: data2[j].nombre_asignatura,
                                id_proyecto: 'vacio',
                                id_area: 'vacio'
                            });
@@ -248,6 +247,10 @@ function horario(respuesta, req, res) {
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
     request.send(postData);
+}
+
+function valor(v) {
+   return v;
 }
 
 module.exports = router;
