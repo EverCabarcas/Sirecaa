@@ -184,11 +184,11 @@ router.post('/asignaturasprograma', function (req, res, next) {
                                 bol = true;
                             }
                     });
-                    if(bol){
+                    /*if(bol){
                         return res.status(500).json({
                             message: data[j]
                         });
-                        /*var co = new curso({
+                        /!*var co = new curso({
                             id_asignatura: data[j].id_asignatura,
                             grupo: data[j].grupo,
                             nombre: data[j].nombre_asignatura,
@@ -202,8 +202,8 @@ router.post('/asignaturasprograma', function (req, res, next) {
                                 });
                             }
                             horario(respuesta,req, res);
-                        });*/
-                    }
+                        });*!/
+                    }*/
                     return res.status(500).json({
                         message: data[j]
                     });
