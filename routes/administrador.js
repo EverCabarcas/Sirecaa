@@ -7,9 +7,9 @@ var Horario = require('../models/horario');
 var Tema = require('../models/tema');
 var date = new Date();
 var data2;
+j = new Number();
 var jwt = require('jsonwebtoken');
 var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
-
 
 
 router.use('/', function (req, res, next) {
