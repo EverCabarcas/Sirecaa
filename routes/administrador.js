@@ -124,7 +124,7 @@ router.post('/proyectodocente', function (req, res, next) {
 });
 
 router.post('/asignaturasprograma', function (req, res, next) {
-    var bol = false;
+
     var url = "http://190.242.62.234:8080/SIRECAARST/programacion/xprograma";
     var method = "POST";
     var postData = 'id_programa='+req.body.id_programa+'&anno='+req.body.anno+'&periodo='+req.body.periodo+'&token='+req.body.token_udc;
@@ -169,8 +169,8 @@ router.post('/asignaturasprograma', function (req, res, next) {
                 }
             }
             if (count != 0){
+                var bol = false;
                 for ( var j = 0; j < data.length; j++) {
-
                     curso.find({
                         id_asignatura: data[j].id_asignatura,
                         grupo: data[j].grupo
@@ -181,14 +181,10 @@ router.post('/asignaturasprograma', function (req, res, next) {
                             });
                         }
                             if(!resultado.length){
-                                bol = true;
+                               bol = true;
                             }
                     });
-                    /*if(bol){
-                        return res.status(500).json({
-                            message: data[j]
-                        });
-                        /!*var co = new curso({
+                        /*var co = new curso({
                             id_asignatura: data[j].id_asignatura,
                             grupo: data[j].grupo,
                             nombre: data[j].nombre_asignatura,
@@ -202,10 +198,10 @@ router.post('/asignaturasprograma', function (req, res, next) {
                                 });
                             }
                             horario(respuesta,req, res);
-                        });*!/
-                    }*/
+                        });*/
+
                     return res.status(500).json({
-                        message: data[j]
+                        message: bol
                     });
                 }
         }
