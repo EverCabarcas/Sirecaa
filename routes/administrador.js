@@ -7,8 +7,6 @@ var Horario = require('../models/horario');
 var Tema = require('../models/tema');
 var date = new Date();
 var data2;
-cur = '';
-const x;
 var jwt = require('jsonwebtoken');
 var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
 
@@ -173,7 +171,7 @@ router.post('/asignaturasprograma', function (req, res, next) {
             }
             if (count != 0){
                 for ( var j = 0; j < data.length; j++) {
-                      var x = j;
+                      const x = j;
                     curso.find({
                         id_asignatura: data[j].id_asignatura,
                         grupo: data[j].grupo
