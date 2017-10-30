@@ -175,8 +175,8 @@ router.post('/asignaturasprograma', function (req, res, next) {
                 var a;
                 for ( var j = 0; j < data.length; j++) {
                     curso.find({
-                        id_asignatura: "IA08106",
-                        grupo: "A"
+                        id_asignatura: data[j].id_asignatura,
+                        grupo: data[j].grupo
                     }, function(err,resultado) {
                         if (err) {
                             return res.status(500).json({
@@ -187,6 +187,7 @@ router.post('/asignaturasprograma', function (req, res, next) {
                         res.status(500).json({
                             message: resultado
                         });
+
 
                     });
 
