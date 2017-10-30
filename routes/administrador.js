@@ -184,7 +184,7 @@ router.post('/asignaturasprograma', function (req, res, next) {
                             }
                     });
                     if(bol){
-                        res.status(500).json({
+                        return res.status(500).json({
                             message: data[j]
                         });
                         /*var co = new curso({
