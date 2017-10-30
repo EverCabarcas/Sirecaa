@@ -180,10 +180,11 @@ router.post('/asignaturasprograma', function (req, res, next) {
                                 message: 'error al guardar los horarios' + err
                             });
                         }
+                        return res.status(500).json({
+                            message: 'lol'
+                        });
                             if(!resultado.length){
-                                return res.status(500).json({
-                                    message: 'lol'
-                                });
+
                             }
                     });
                         /*var co = new curso({
