@@ -174,8 +174,11 @@ router.post('/asignaturasprograma', function (req, res, next) {
             }
             if (count != 0){
                 for ( var j = 0; j < data.length; j++) {
-                     a = curso.find({id_asignatura: data[j].id_asignatura, grupo: data[j].grupo});
-                    if(a == '{}'){
+                    return res.status(500).json({
+                        message: curso.find({id_asignatura: data[j].id_asignatura, grupo: data[j].grupo})
+                    });
+
+                    /*if(a == '{}'){
                         return res.status(500).json({
                             message: 'lol'
                         });
@@ -194,7 +197,7 @@ router.post('/asignaturasprograma', function (req, res, next) {
                           }
                           horario(respuesta,req, res);
                       });
-                    }
+                    }*/
                 }
                 return res.status(200).json({
                     message: 'Periodo academico iniciado con exito : Falta el nombre de la asignatura 2'
