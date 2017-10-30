@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var curso = require('../models/curso');
-var a = require('../models/curso');
 var area = require('../models/area');
 var proyecto_docente = require('../models/proyecto_docente');
 var Horario = require('../models/horario');
@@ -173,35 +172,44 @@ router.post('/asignaturasprograma', function (req, res, next) {
                 });
             }
             if (count != 0){
+                var a;
                 for ( var j = 0; j < data.length; j++) {
-                    return res.status(500).json({
-                        message: curso.find({id_asignatura: data[j].id_asignatura, grupo: data[j].grupo})
+                    curso.find({
+                        id_asignatura: data[j].id_asignatura,
+                        grupo: data[j].grupo
+                    }, function(err,resultado) {
+                        if (err) {
+                            return res.status(500).json({
+                                message: 'error al guardar los horarios' + err
+                            });
+                        }
+
+                            a = resultado;
+
+
+                    });
+                    res.status(500).json({
+                        message: a
                     });
 
-                    /*if(a == '{}'){
-                        return res.status(500).json({
-                            message: 'lol'
+                        /*var co = new curso({
+                            id_asignatura: data[j].id_asignatura,
+                            grupo: data[j].grupo,
+                            nombre: data[j].nombre_asignatura,
+                            id_proyecto: 'vacio',
+                            id_area: 'vacio'
                         });
-                        var co = new curso({
-                          id_asignatura: data[j].id_asignatura,
-                          grupo: data[j].grupo,
-                          nombre: data[j].nombre_asignatura,
-                          id_proyecto: 'vacio',
-                          id_area: 'vacio'
-                      });
-                      co.save(function (err, respuesta) {
-                          if(err){
-                              return res.status(500).json({
-                                  message: 'error al guardar los horarios' + err
-                              });
-                          }
-                          horario(respuesta,req, res);
-                      });
-                    }*/
+                        co.save(function (err, respuesta) {
+                            if(err){
+                                return res.status(500).json({
+                                    message: 'error al guardar los horarios' + err
+                                });
+                            }
+                            horario(respuesta,req, res);
+                        });*/
+
+
                 }
-                return res.status(200).json({
-                    message: 'Periodo academico iniciado con exito : Falta el nombre de la asignatura 2'
-                });
         }
 
         });
@@ -255,5 +263,12 @@ function horario(respuesta, req, res) {
     request.send(postData);
 }
 
+function asignacion(resultado) {
+   if(!resultado){
+       return 'no hay resultado'
+   }else {
+       return 'si hay resultado'
+   }
+}
 
 module.exports = router;
