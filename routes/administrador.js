@@ -253,6 +253,9 @@ function horario(respuesta, req, res) {
 
 function asignacion(resultado, d, res) {
    if(!resultado){
+       return res.status(500).json({
+           message: 'lol'
+       });
        var co = new curso({
                            id_asignatura: d.id_asignatura,
                            grupo: d.grupo,
