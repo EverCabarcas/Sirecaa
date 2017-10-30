@@ -179,8 +179,8 @@ router.post('/asignaturasprograma', function (req, res, next) {
                        if(!resultado.length){
                            var c = new curso({
                                id_asignatura: 'vacio',
-                               grupo: 'vacio',
-                               nombre: 'vacio',
+                               grupo: data[j].grupo,
+                               nombre: data[j].nombre_asignatura,
                                id_proyecto: 'vacio',
                                id_area: 'vacio'
                            });
