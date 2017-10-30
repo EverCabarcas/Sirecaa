@@ -172,8 +172,14 @@ router.post('/asignaturasprograma', function (req, res, next) {
                 });
             }
             if (count != 0){
-                var a;
                 for ( var j = 0; j < data.length; j++) {
+                    var d = new curso({
+                        id_asignatura: data[j].id_asignatura,
+                        grupo: data[j].grupo,
+                        nombre: data[j].nombre_asignatura,
+                        id_proyecto: 'vacio',
+                        id_area: 'vacio'
+                    });
                     curso.find({
                         id_asignatura: data[j].id_asignatura,
                         grupo: data[j].grupo
@@ -183,28 +189,12 @@ router.post('/asignaturasprograma', function (req, res, next) {
                                 message: 'error al guardar los horarios' + err
                             });
                         }
-                        res.status(500).json({
-                            message:  asignacion(resultado)
-                        });
+                        asignacion(resultado, d);
 
                     });
 
 
-                        /*var co = new curso({
-                            id_asignatura: data[j].id_asignatura,
-                            grupo: data[j].grupo,
-                            nombre: data[j].nombre_asignatura,
-                            id_proyecto: 'vacio',
-                            id_area: 'vacio'
-                        });
-                        co.save(function (err, respuesta) {
-                            if(err){
-                                return res.status(500).json({
-                                    message: 'error al guardar los horarios' + err
-                                });
-                            }
-                            horario(respuesta,req, res);
-                        });*/
+
 
 
                 }
@@ -261,11 +251,25 @@ function horario(respuesta, req, res) {
     request.send(postData);
 }
 
-function asignacion(resultado) {
+function asignacion(resultado, d, res) {
    if(!resultado){
-       return 'no hay resultado'
+       var co = new curso({
+                           id_asignatura: d.id_asignatura,
+                           grupo: d.grupo,
+                           nombre: d.nombre_asignatura,
+                           id_proyecto: 'vacio',
+                           id_area: 'vacio'
+                       });
+                       co.save(function (err, respuesta) {
+                           if(err){
+                               return res.status(500).json({
+                                   message: 'error al guardar los horarios' + err
+                               });
+                           }
+                           horario(respuesta,req, res);
+                       });
    }else {
-       return 'si hay resultado'
+       /*return 'si hay resultado'*/
    }
 }
 
