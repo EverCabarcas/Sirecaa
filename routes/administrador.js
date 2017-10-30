@@ -168,20 +168,11 @@ router.post('/asignaturasprograma', function (req, res, next) {
                     });
                 }
                 return res.status(200).json({
-                    message: 'Periodo academico iniciado con exito: falta el nombre del programa'
+                    message: 'Periodo academico iniciado con exito : Falta el nombre de la asignatura'
                 });
             }
-       /*     if (count != 0){
-                var bol = false;
+            if (count != 0){
                 for ( var j = 0; j < data.length; j++) {
-                    var cc = new curso({
-                            id_asignatura: data[j].id_asignatura,
-                            grupo: data[j].grupo,
-                            nombre: data[j].nombre_asignatura,
-                            id_proyecto: 'vacio',
-                            id_area: 'vacio'
-                        }
-                    );
                     curso.find({
                         id_asignatura: data[j].id_asignatura,
                         grupo: data[j].grupo
@@ -191,13 +182,14 @@ router.post('/asignaturasprograma', function (req, res, next) {
                                 message: 'error al guardar los horarios' + err
                             });
                         }
-                        return res.status(500).json({
-                            message:  asignacion(resultado, cc)
-                        });
-
+                        if(!resultado) {
+                            return res.status(500).json({
+                                message: asignacion(resultado)
+                            });
+                        }
 
                     });
-                        /!*var co = new curso({
+                        /*var co = new curso({
                             id_asignatura: data[j].id_asignatura,
                             grupo: data[j].grupo,
                             nombre: data[j].nombre_asignatura,
@@ -211,11 +203,11 @@ router.post('/asignaturasprograma', function (req, res, next) {
                                 });
                             }
                             horario(respuesta,req, res);
-                        });*!/
+                        });*/
 
 
                 }
-        }*/
+        }
 
         });
     };
@@ -268,11 +260,11 @@ function horario(respuesta, req, res) {
     request.send(postData);
 }
 
-function asignacion(resultado, cc) {
+function asignacion(resultado) {
    if(!resultado){
        return 'no hay resultado'
    }else {
-       return 'si hay resultado' + cc.nombre
+       return 'si hay resultado'
    }
 }
 
