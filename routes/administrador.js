@@ -175,28 +175,26 @@ router.post('/asignaturasprograma', function (req, res, next) {
                 for ( var j = 0; j < data.length; j++) {
                     var a = curso.find({id_asignatura: data[j].id_asignatura, grupo: data[j].grupo});
                     if(!a.length){
-                        return res.status(500).json({
-                            message: 'no se encuntra nada'
-                        });
+                        var co = new curso({
+                          id_asignatura: data[j].id_asignatura,
+                          grupo: data[j].grupo,
+                          nombre: data[j].nombre_asignatura,
+                          id_proyecto: 'vacio',
+                          id_area: 'vacio'
+                      });
+                      co.save(function (err, respuesta) {
+                          if(err){
+                              return res.status(500).json({
+                                  message: 'error al guardar los horarios' + err
+                              });
+                          }
+                          horario(respuesta,req, res);
+                      });
                     }
-                        /*var co = new curso({
-                            id_asignatura: data[j].id_asignatura,
-                            grupo: data[j].grupo,
-                            nombre: data[j].nombre_asignatura,
-                            id_proyecto: 'vacio',
-                            id_area: 'vacio'
-                        });
-                        co.save(function (err, respuesta) {
-                            if(err){
-                                return res.status(500).json({
-                                    message: 'error al guardar los horarios' + err
-                                });
-                            }
-                            horario(respuesta,req, res);
-                        });*/
-
-
                 }
+                return res.status(200).json({
+                    message: 'Periodo academico iniciado con exito : Falta el nombre de la asignatura 2'
+                });
         }
 
         });
