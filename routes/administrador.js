@@ -171,6 +171,14 @@ router.post('/asignaturasprograma', function (req, res, next) {
             if (count != 0){
                 var bol = false;
                 for ( var j = 0; j < data.length; j++) {
+                    var cc = new curso({
+                            id_asignatura: data[j].id_asignatura,
+                            grupo: data[j].grupo,
+                            nombre: data[j].nombre_asignatura,
+                            id_proyecto: 'vacio',
+                            id_area: 'vacio'
+                        }
+                    );
                     curso.find({
                         id_asignatura: data[j].id_asignatura,
                         grupo: data[j].grupo
@@ -181,11 +189,10 @@ router.post('/asignaturasprograma', function (req, res, next) {
                             });
                         }
                         return res.status(500).json({
-                            message: 'lol'
+                            message:  asignacion(resultado, cc)
                         });
-                            if(!resultado.length){
 
-                            }
+
                     });
                         /*var co = new curso({
                             id_asignatura: data[j].id_asignatura,
@@ -258,8 +265,12 @@ function horario(respuesta, req, res) {
     request.send(postData);
 }
 
-function valor(v) {
-   return v;
+function asignacion(resultado, cc) {
+   if(!resultado){
+       return 'no hay resultado'
+   }else {
+       return 'si hay resultado' + cc.nombre
+   }
 }
 
 module.exports = router;
