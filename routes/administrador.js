@@ -168,7 +168,7 @@ router.post('/asignaturasprograma', function (req, res, next) {
                    });
                }
            }
-               for( j =0; j< data.length; j++) {
+               for( var j =0; j< data.length; j++) {
                    curso.find({id_asignatura: data[j].id_asignatura, grupo: data[j].grupo}, function (err, resultado) {
                        if(err){
                            return res.status(500).json({
@@ -192,7 +192,6 @@ router.post('/asignaturasprograma', function (req, res, next) {
                                horario(respuesta,req, res);
                            });
                        }
-
 
                    });
                }
