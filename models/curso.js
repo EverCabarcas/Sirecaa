@@ -6,7 +6,9 @@ var schema = new Schema({
     grupo: {type: String, required: true},
     nombre: {type: String, required: true},
     id_proyecto: {type: String, required: true},
-    id_area: {type: String, required: true}
+    id_area: {type: String, required: true},
+    periodo: {type: String, required: true},
+    anno: {type: String, required: true}
 });
 
 module.exports = mongoose.model('Curso', schema);

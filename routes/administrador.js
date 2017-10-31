@@ -5,6 +5,7 @@ var area = require('../models/area');
 var proyecto_docente = require('../models/proyecto_docente');
 var Horario = require('../models/horario');
 var Tema = require('../models/tema');
+var CP = require('../models/comprueba_periodo');
 var date = new Date();
 var jwt = require('jsonwebtoken');
 var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
@@ -124,39 +125,45 @@ router.post('/proyectodocente', function (req, res, next) {
 });
 
 router.post('/asignaturasprograma', function (req, res, next) {
-
-    var url = "http://190.242.62.234:8080/SIRECAARST/programacion/xprograma";
-    var method = "POST";
-    var postData = 'id_programa='+req.body.id_programa+'&anno='+req.body.anno+'&periodo='+req.body.periodo+'&token='+req.body.token_udc;
-
-    var async = true;
-
-    var request = new XMLHttpRequest();
-
-    request.onload = function () {
-
-        var status = request.status; // HTTP response status, e.g., 200 for "200 OK"
-        var data = JSON.parse(this.responseText); // Returned data, e.g., an HTML document.
-        if (status != 200) {
-            return res.status(status).json({
-                message: 'Error de peticion: ' + status
+    CP.findOne({id_programa: req.body.id_programa, anno: req.body.anno, periodo: req.body.periodo }, function (err, resultado) {
+        if(err){
+            return res.status(500).json({
+                message: 'Error en la busqueda de un comprueba-periodo'
             });
         }
+        if(!resultado){
+            var cp = new CP({
+                id_programa: req.body.id_programa,
+                anno: req.body.anno,
+                periodo: req.body.periodo
+            });
+            cp.save();
+            var url = "http://190.242.62.234:8080/SIRECAARST/programacion/xprograma";
+            var method = "POST";
+            var postData = 'id_programa='+req.body.id_programa+'&anno='+req.body.anno+'&periodo='+req.body.periodo+'&token='+req.body.token_udc;
 
-        curso.count(function (err, count) {
-            if (err) {
-                return res.status(500).json({
-                    message: 'error en la comparacion de asignaturas de nuestra bd con la de udc' + err
-                });
-            }
-            if (count == 0) {
+            var async = true;
+
+            var request = new XMLHttpRequest();
+
+            request.onload = function () {
+
+                var status = request.status; // HTTP response status, e.g., 200 for "200 OK"
+                var data = JSON.parse(this.responseText); // Returned data, e.g., an HTML document.
+                if (status != 200) {
+                    return res.status(status).json({
+                        message: 'Error de peticion: ' + status
+                    });
+                }
                 for (var i = 0; i < data.length; i++) {
                     var c = new curso({
                         id_asignatura: data[i].id_asignatura,
                         grupo: data[i].grupo,
                         nombre: data[i].nombre_asignatura,
                         id_proyecto: 'vacio',
-                        id_area: 'vacio'
+                        id_area: 'vacio',
+                        periodo : req.body.periodo,
+                        anno : req.body.anno
                     });
                     c.save(function (err, respuesta) {
                         if (err) {
@@ -170,52 +177,20 @@ router.post('/asignaturasprograma', function (req, res, next) {
                 return res.status(200).json({
                     message: 'Periodo academico iniciado con exito : Falta el nombre de la asignatura'
                 });
-            }
-            if (count != 0){
+            };
+            request.open(method, url, async);
 
-              curso.find({}, function (err, array) {
-                  if(err){
-                      return res.status(500).json({
-                          message: 'error al guardar los horarios' + err
-                      });
-                  }
-                  asignacion(array, data, req, res);
+            request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
-              });
-                return res.status(500).json({
-                    message: 'pues si'
-                });
+            request.send(postData);
 
-                /*for ( var j = 0; j < data.length; j++) {
-                    var d = new curso({
-                        id_asignatura: data[j].id_asignatura,
-                        grupo: data[j].grupo,
-                        nombre: data[j].nombre_asignatura,
-                        id_proyecto: 'vacio',
-                        id_area: 'vacio'
-                    });
-                    curso.find({
-                        id_asignatura: data[j].id_asignatura,
-                        grupo: data[j].grupo
-                    }, function(err,resultado) {
-                        if (err) {
-                            return res.status(500).json({
-                                message: 'error al guardar los horarios' + err
-                            });
-                        }
-                        asignacion(resultado, d, res);
-
-                    });
-                }*/
+        }else{
+            return res.status(200).json({
+                message: 'El periodo academico ya ha sido iniciado para este programa'
+            });
         }
 
-        });
-    };
-    request.open(method, url, async);
-
-    request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-    request.send(postData);
+    });
 
 });
 
@@ -246,7 +221,9 @@ function horario(respuesta, req, res) {
                 h_inicio: data[i].hora_inicio,
                 h_fin: data[i].hora_fin,
                 fecha: data[i].fecha,
-                registro: false
+                registro: false,
+                periodo: req.body.periodo,
+                anno: req.body.anno
             });
             h.save();
         }
@@ -258,37 +235,6 @@ function horario(respuesta, req, res) {
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
     request.send(postData);
-}
-
-function asignacion(array, data, req, res) {
-
-    for(var i=0; i < data.length; i++){
-        for(var j=0; j < array.length; j++){
-            if((data[i].grupo == array[j].grupo) && (data[i].id_asignatura == array[j].id_asignatura) &&(data[i].nombre_asignatura == array[j].nombre)){
-                bol = true;
-            }
-        }
-        if(bol==false){
-            var co = new curso({
-                id_asignatura: data[i].id_asignatura,
-                grupo: data[i].grupo,
-                nombre: data[i].nombre_asignatura,
-                id_proyecto: 'vacio',
-                id_area: 'vacio'
-            });
-            co.save(function (err, respuesta) {
-                if(err){
-                    return res.status(500).json({
-                        message: 'error al guardar los horarios' + err
-                    });
-                }
-                horario(respuesta,req, res);
-            });
-        }
-        if(bol==true){
-            bol = false;
-        }
-    }
 }
 
 module.exports = router;
