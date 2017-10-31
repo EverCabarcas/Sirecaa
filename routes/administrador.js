@@ -173,10 +173,16 @@ router.post('/asignaturasprograma', function (req, res, next) {
             }
             if (count != 0){
 
-                var a =  curso.find();
-                res.status(500).json({
-                    message: a
-                });
+              curso.find({}, function (err, array) {
+                  if(err){
+                      return res.status(500).json({
+                          message: 'error al guardar los horarios' + err
+                      });
+                  }
+                  return res.status(500).json({
+                      message: array
+                  });
+              })
 
                 /*for ( var j = 0; j < data.length; j++) {
                     var d = new curso({
