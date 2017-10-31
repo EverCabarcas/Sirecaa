@@ -8,7 +8,7 @@ var Tema = require('../models/tema');
 var date = new Date();
 var jwt = require('jsonwebtoken');
 var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
-
+var array2 =[];
 
 
 router.use('/', function (req, res, next) {
@@ -172,7 +172,7 @@ router.post('/asignaturasprograma', function (req, res, next) {
                 });
             }
             if (count != 0){
-              var array2 =[];
+
               curso.find({}, function (err, array) {
                   if(err){
                       return res.status(500).json({
