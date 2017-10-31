@@ -264,7 +264,7 @@ function asignacion(array, data, req, res) {
 
     for(var i=0; i < data.length; i++){
         for(var j=0; j < array.length; j++){
-            if(data[i] == array[j]){
+            if((data[i].grupo == array[j].grupo) && (data[i].id_asignatura == array[j].id_asignatura) &&(data[i].nombre_asignatura == array[j].nombre)){
                 bol = true;
             }
         }
