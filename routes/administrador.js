@@ -173,13 +173,9 @@ router.post('/asignaturasprograma', function (req, res, next) {
             }
             if (count != 0){
 
-
+                var a =  curso.find();
                 res.status(500).json({
-                    message:  curso.find()
-                });
-
-                return res.status(500).json({
-                    message: array
+                    message: a
                 });
 
                 /*for ( var j = 0; j < data.length; j++) {
