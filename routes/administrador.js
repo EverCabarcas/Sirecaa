@@ -172,7 +172,7 @@ router.post('/asignaturasprograma', function (req, res, next) {
                 });
             }
             if (count != 0){
-              var array2;
+              var array2 =[];
               curso.find({}, function (err, array) {
                   if(err){
                       return res.status(500).json({
@@ -180,10 +180,11 @@ router.post('/asignaturasprograma', function (req, res, next) {
                       });
                   }
                   array2 = array;
-                  return res.status(500).json({
-                      message: array2
-                  });
-              })
+
+              });
+                return res.status(500).json({
+                    message: array2
+                });
 
                 /*for ( var j = 0; j < data.length; j++) {
                     var d = new curso({
