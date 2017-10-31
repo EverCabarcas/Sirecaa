@@ -285,6 +285,9 @@ function asignacion(array, data, req, res) {
                 horario(respuesta,req, res);
             });
         }
+        if(bol==true){
+            bol = false;
+        }
     }
    /*if(!resultado){
        return res.status(500).json({
