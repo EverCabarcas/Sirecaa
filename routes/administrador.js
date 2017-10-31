@@ -179,11 +179,11 @@ router.post('/asignaturasprograma', function (req, res, next) {
                           message: 'error al guardar los horarios' + err
                       });
                   }
-                  array2 = array;
+                  asignacion(array, data, req, res);
 
               });
                 return res.status(500).json({
-                    message: array2
+                    message: 'pues si'
                 });
 
                 /*for ( var j = 0; j < data.length; j++) {
@@ -260,8 +260,33 @@ function horario(respuesta, req, res) {
     request.send(postData);
 }
 
-function asignacion(resultado, d, res) {
-   if(!resultado){
+function asignacion(array, data, req, res) {
+    var bol = false;
+    for(var i=0; i < data.length; i++){
+        for(var j=0; j < array.length; j++){
+            if(data[i] == array[j]){
+                bol = true;
+            }
+        }
+        if(bol==false){
+            var co = new curso({
+                id_asignatura: data[i].id_asignatura,
+                grupo: data[i].grupo,
+                nombre: data[i].nombre_asignatura,
+                id_proyecto: 'vacio',
+                id_area: 'vacio'
+            });
+            co.save(function (err, respuesta) {
+                if(err){
+                    return res.status(500).json({
+                        message: 'error al guardar los horarios' + err
+                    });
+                }
+                horario(respuesta,req, res);
+            });
+        }
+    }
+   /*if(!resultado){
        return res.status(500).json({
            message: 'lol'
        });
@@ -281,8 +306,8 @@ function asignacion(resultado, d, res) {
                            horario(respuesta,req, res);
                        });
    }else {
-       /*return 'si hay resultado'*/
-   }
+       /!*return 'si hay resultado'*!/
+   }*/
 }
 
 module.exports = router;
