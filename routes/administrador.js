@@ -172,17 +172,10 @@ router.post('/asignaturasprograma', function (req, res, next) {
                 });
             }
             if (count != 0){
-                var array = [];
-                curso.find({},function(err,resultado) {
-                    if (err) {
-                        return res.status(500).json({
-                            message: 'error al guardar los horarios' + err
-                        });
-                    }
-                    res.status(500).json({
-                        message: resultado
-                    });
 
+
+                res.status(500).json({
+                    message:  curso.find()
                 });
 
                 return res.status(500).json({
