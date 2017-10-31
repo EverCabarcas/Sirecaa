@@ -8,7 +8,7 @@ var Tema = require('../models/tema');
 var date = new Date();
 var jwt = require('jsonwebtoken');
 var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
-var array2 =[];
+var bol = false;
 
 
 router.use('/', function (req, res, next) {
@@ -261,7 +261,7 @@ function horario(respuesta, req, res) {
 }
 
 function asignacion(array, data, req, res) {
-    var bol = false;
+
     for(var i=0; i < data.length; i++){
         for(var j=0; j < array.length; j++){
             if(data[i] == array[j]){
@@ -289,28 +289,6 @@ function asignacion(array, data, req, res) {
             bol = false;
         }
     }
-   /*if(!resultado){
-       return res.status(500).json({
-           message: 'lol'
-       });
-       var co = new curso({
-                           id_asignatura: d.id_asignatura,
-                           grupo: d.grupo,
-                           nombre: d.nombre_asignatura,
-                           id_proyecto: 'vacio',
-                           id_area: 'vacio'
-                       });
-                       co.save(function (err, respuesta) {
-                           if(err){
-                               return res.status(500).json({
-                                   message: 'error al guardar los horarios' + err
-                               });
-                           }
-                           horario(respuesta,req, res);
-                       });
-   }else {
-       /!*return 'si hay resultado'*!/
-   }*/
 }
 
 module.exports = router;
