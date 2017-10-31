@@ -172,7 +172,22 @@ router.post('/asignaturasprograma', function (req, res, next) {
                 });
             }
             if (count != 0){
-                for ( var j = 0; j < data.length; j++) {
+                var array = [];
+                curso.find(function(err,resultado) {
+                    if (err) {
+                        return res.status(500).json({
+                            message: 'error al guardar los horarios' + err
+                        });
+                    }
+                    array = resultado
+
+                });
+
+                return res.status(500).json({
+                    message: array
+                });
+
+                /*for ( var j = 0; j < data.length; j++) {
                     var d = new curso({
                         id_asignatura: data[j].id_asignatura,
                         grupo: data[j].grupo,
@@ -192,12 +207,7 @@ router.post('/asignaturasprograma', function (req, res, next) {
                         asignacion(resultado, d, res);
 
                     });
-
-
-
-
-
-                }
+                }*/
         }
 
         });
