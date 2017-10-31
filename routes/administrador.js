@@ -124,7 +124,7 @@ router.post('/proyectodocente', function (req, res, next) {
     });
 });
 
-router.post('/asignaturasprograma', function (req, res, next) {
+router.post('/iniciarperiodoacademico', function (req, res, next) {
     CP.findOne({id_programa: req.body.id_programa, anno: req.body.anno, periodo: req.body.periodo }, function (err, resultado) {
         if(err){
             return res.status(500).json({
@@ -135,7 +135,8 @@ router.post('/asignaturasprograma', function (req, res, next) {
             var cp = new CP({
                 id_programa: req.body.id_programa,
                 anno: req.body.anno,
-                periodo: req.body.periodo
+                periodo: req.body.periodo,
+                estado: true
             });
             cp.save();
             var url = "http://190.242.62.234:8080/SIRECAARST/programacion/xprograma";
@@ -191,6 +192,30 @@ router.post('/asignaturasprograma', function (req, res, next) {
         }
 
     });
+
+});
+
+router.post('/estadodelperiodo',function (req, res, next) {
+    CP.findOne({id_programa: req.body.id_programa, anno: req.body.anno, periodo: req.body.periodo }, function (err, resultado) {
+        if (err) {
+            return res.status(500).json({
+                message: 'Error en la busqueda de un comprueba-periodo'
+            });
+        }
+        if(resultado){
+            return res.status(200).json({
+                message: resultado.estado
+            });
+        }
+        if(!resultado){
+            return res.status(500).json({
+                message: 'El periodo aun no se ha creado'
+            });
+        }
+    });
+});
+
+router.post('/modificaciondelperiodo',function (req, res, next) {
 
 });
 
