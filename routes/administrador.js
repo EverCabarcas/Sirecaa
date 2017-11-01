@@ -204,7 +204,7 @@ router.post('/estadodelperiodo',function (req, res, next) {
         }
         if(resultado){
             return res.status(200).json({
-                message: req.body.estado
+                message: resultado.estado
             });
         }
         if(!resultado){
