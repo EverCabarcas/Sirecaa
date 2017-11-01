@@ -209,7 +209,7 @@ router.post('/estadodelperiodo',function (req, res, next) {
         }
         if(!resultado){
             return res.status(500).json({
-                message: 'El periodo aun no se ha creado'
+                message: false
             });
         }
     });
@@ -219,17 +219,7 @@ router.post('/modificaciondelperiodo',function (req, res, next) {
     CP.findAndModify({id_programa: req.body.id_programa, anno: req.body.anno, periodo: req.body.periodo },{estado: req.body.estado}, function (err, resultado) {
         if (err) {
             return res.status(500).json({
-                message: 'Error en la busqueda de un comprueba-periodo'
-            });
-        }
-        if(resultado){
-            return res.status(200).json({
-                message: resultado.estado
-            });
-        }
-        if((!resultado) || (resultado.estado == false) ){
-            return res.status(500).json({
-                message: 'El periodo aun no se ha iniciado'
+                message: 'Error al modificar'
             });
         }
     });

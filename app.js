@@ -13,7 +13,7 @@ var adminRoutes = require('./routes/administrador');
 
 var app = express();
 
-mongoose.connect('mongodb://root:bdatos@ds125335.mlab.com:25335/sirecaa-platform');
+mongoose.connect('mongodb://root:bdatos@ds243295.mlab.com:43295/sirecaa-platform');
 //Conect
 
 // view engine setup
