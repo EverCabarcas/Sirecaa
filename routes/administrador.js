@@ -228,6 +228,10 @@ router.patch('/modificaciondelperiodo',function (req, res, next) {
             return res.status(200).json({
                     message: 'Exito al modificar el periodo'
             });
+        }else{
+            return res.status(500).json({
+                message: 'no se ha creado el periodo ingresado'
+            });
         }
     });
 });
