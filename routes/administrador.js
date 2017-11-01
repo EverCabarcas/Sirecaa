@@ -222,6 +222,11 @@ router.post('/modificaciondelperiodo',function (req, res, next) {
                 message: 'Error al modificar'
             });
         }
+        if(resultado){
+            return res.status(200).json({
+                    message: 'Exito al modificar el periodo'
+            });
+        }
     });
 });
 
