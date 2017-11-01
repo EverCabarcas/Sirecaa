@@ -215,7 +215,7 @@ router.post('/estadodelperiodo',function (req, res, next) {
     });
 });
 
-router.patch('/modificaciondelperiodo',function (req, res, next) {
+router.patch('/modificaciondelperiodo:estado',function (req, res, next) {
     CP.findOne({id_programa: req.body.id_programa, anno: req.body.anno, periodo: req.body.periodo }, function (err, resultado) {
         if (err) {
             return res.status(500).json({
@@ -223,7 +223,7 @@ router.patch('/modificaciondelperiodo',function (req, res, next) {
             });
         }
         if(resultado){
-            resultado.estado = req.body.estado;
+            resultado.estado = req.params.estado;
             resultado.save();
             return res.status(200).json({
                     message: 'Exito al modificar el periodo'
