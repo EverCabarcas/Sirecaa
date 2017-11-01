@@ -223,7 +223,7 @@ router.post('/modificaciondelperiodo',function (req, res, next) {
             });
         }
         if(resultado){
-            resultado.estado = req.params.estado;
+            resultado.estado = req.body.estado;
             resultado.save();
             return res.status(200).json({
                     message: 'Exito al modificar el periodo'
