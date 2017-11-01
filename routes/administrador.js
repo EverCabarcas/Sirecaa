@@ -215,14 +215,16 @@ router.post('/estadodelperiodo',function (req, res, next) {
     });
 });
 
-router.post('/modificaciondelperiodo',function (req, res, next) {
-    CP.findAndModify({id_programa: req.body.id_programa, anno: req.body.anno, periodo: req.body.periodo },{estado: req.body.estado}, function (err, resultado) {
+router.patch('/modificaciondelperiodo',function (req, res, next) {
+    CP.findOne({id_programa: req.body.id_programa, anno: req.body.anno, periodo: req.body.periodo }, function (err, resultado) {
         if (err) {
             return res.status(500).json({
                 message: 'Error al modificar'
             });
         }
         if(resultado){
+            resultado.estado = req.body.estado;
+            resultado.save();
             return res.status(200).json({
                     message: 'Exito al modificar el periodo'
             });
