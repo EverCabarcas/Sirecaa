@@ -195,7 +195,7 @@ router.post('/iniciarperiodoacademico', function (req, res, next) {
 
 });
 
-router.patch('/estadodelperiodo/:estado',function (req, res, next) {
+router.post('/estadodelperiodo',function (req, res, next) {
     CP.findOne({id_programa: req.body.id_programa, anno: req.body.anno, periodo: req.body.periodo }, function (err, resultado) {
         if (err) {
             return res.status(500).json({
@@ -204,7 +204,7 @@ router.patch('/estadodelperiodo/:estado',function (req, res, next) {
         }
         if(resultado){
             return res.status(200).json({
-                message: req.params.id
+                message: req.body.estado
             });
         }
         if(!resultado){
