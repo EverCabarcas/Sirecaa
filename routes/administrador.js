@@ -60,7 +60,7 @@ router.post('/areainfo', function (req, res, next) {
 });
 
 router.post('/proyectodocenteinfo', function (req, res, next) {
-    curso.findOne({id_asinatura: req.body.id_asignatura, grupo: req.body.grupo, anno: req.body.anno, periodo: req.body.periodo }, function (err, curso) {
+    curso.findOne({id_asignatura: req.body.id_asignatura, grupo: req.body.grupo, anno: req.body.anno, periodo: req.body.periodo }, function (err, curso) {
         if(!curso){
             return res.status(500).json({
                 message : 'Curso no encontrado'
