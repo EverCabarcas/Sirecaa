@@ -60,10 +60,10 @@ router.post('/areainfo', function (req, res, next) {
 });
 
 router.post('/proyectodocenteinfo', function (req, res, next) {
-    proyecto_docente.findById(req.body.id_proyecto, function (err, proyecto) {
-        if(!proyecto){
+    curso.findOne({id_asinatura: req.body.id_asignatura, grupo: req.body.grupo, anno: req.body.anno, periodo: req.body.periodo }, function (err, curso) {
+        if(!curso){
             return res.status(500).json({
-                message : 'Proyecto Docente no encontrado'
+                message : 'Curso no encontrado'
             });
         }
         if(err){
@@ -71,30 +71,44 @@ router.post('/proyectodocenteinfo', function (req, res, next) {
                 message : 'Error en la operacion '+err
             });
         }
-            Tema.find({id_proyecto: req.body.id_proyecto}, function (err, temas) {
-                if(!temas){
-                    return res.status(500).json({
-                        message : 'El Proyecto Docente no tiene temas asociados'
-                    });
-                }
+        if(curso.id_proyecto == 'vacio'){
+            return res.status(500).json({
+                message : 'No hay proyecto docente asociado al curso'
+            });
+        }else {
+            proyecto_docente.findById(curso.id_proyecto, function (err, proyecto) {
                 if(err){
                     return res.status(400).json({
                         message : 'Error en la operacion '+err
                     });
                 }
-                res.status(200).json({
-                    objetivos : proyecto.objetivos,
-                    competencias: proyecto.competencias,
-                    bibliografia: proyecto.bibliografia,
-                    temas: temas
+                Tema.find({id_proyecto: curso.id_proyecto}, function (err, temas) {
+                    if (!temas) {
+                        return res.status(500).json({
+                            message: 'El Proyecto Docente no tiene temas asociados'
+                        });
+                    }
+                    if (err) {
+                        return res.status(400).json({
+                            message: 'Error en la operacion ' + err
+                        });
+                    }
+                    res.status(200).json({
+                        objetivos: proyecto.objetivos,
+                        competencias: proyecto.competencias,
+                        bibliografia: proyecto.bibliografia,
+                        temas: temas
+                    });
                 });
             });
 
+        }
     })
 });
 
 router.post('/proyectodocente', function (req, res, next) {
     var proyecto = new proyecto_docente({
+        id_programa: req.body.id_programa,
         objetivos: req.body.objetivos,
         competencias: req.body.competencias,
         bibliografia: req.body.bibliografia,
@@ -234,6 +248,10 @@ router.post('/modificaciondelperiodo',function (req, res, next) {
             });
         }
     });
+});
+
+router.post('/listaproyectosdocentes', function (req, res, next) {
+
 });
 
 function horario(respuesta, req, res) {
