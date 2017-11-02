@@ -94,6 +94,7 @@ router.post('/proyectodocenteinfo', function (req, res, next) {
                         });
                     }
                     res.status(200).json({
+                        _id: proyecto._id,
                         objetivos: proyecto.objetivos,
                         competencias: proyecto.competencias,
                         bibliografia: proyecto.bibliografia,
@@ -131,8 +132,7 @@ router.post('/proyectodocente', function (req, res, next) {
         }
 
         res.status(201).json({
-            message: 'Proyecto Docente Creado',
-            resultado: result
+            message: 'Proyecto Docente Creado'
         });
 
     });
@@ -172,6 +172,7 @@ router.post('/iniciarperiodoacademico', function (req, res, next) {
                 }
                 for (var i = 0; i < data.length; i++) {
                     var c = new curso({
+                        id_programa: req.body.id_programa,
                         id_asignatura: data[i].id_asignatura,
                         grupo: data[i].grupo,
                         nombre: data[i].nombre_asignatura,
@@ -250,7 +251,7 @@ router.post('/modificaciondelperiodo',function (req, res, next) {
     });
 });
 
-router.post('/listaproyectosdocentes', function (req, res, next) {
+router.post('/listaproyectosdocente', function (req, res, next) {
         proyecto_docente.find({id_programa: req.body.id_programa}, function (err, proyectos) {
             if (err) {
                 return res.status(500).json({
@@ -264,6 +265,44 @@ router.post('/listaproyectosdocentes', function (req, res, next) {
             }
             return res.status(200).json({
                 message: proyectos
+            });
+        });
+});
+
+router.post('/asignarproyectodocente', function (req, res, next) {
+        curso.findOne({id_asignatura: req.body.id_asignatura , grupo: req.body.grupo, periodo: req.body.periodo, anno: req.body.anno }, function (err, curso) {
+            if (err) {
+                return res.status(500).json({
+                    message: 'Error en la asignacion de proyecto docente '+err
+                });
+            }
+            if(!curso){
+                return res.status(500).json({
+                    message: 'El curso que intenta buscar no existe'+err
+                });
+            }
+            curso.id_proyecto = req.body.id_proyecto;
+            curso.save();
+            return res.status(200).json({
+                message: 'Proyecto docente asignado con exito'
+            });
+        });
+});
+
+router.post('/cursosdeunproyecto', function (req, res, next) {
+        curso.find({id_proyecto: req.body.id_proyecto}, function (err, cursos) {
+            if (err) {
+                return res.status(500).json({
+                    message: 'Error al buscar los cursos de un proyecto docente '+err
+                });
+            }
+            if(!cursos.length){
+                return res.status(500).json({
+                    message: 'No hay cursos asociados a este proyecto docente'
+                });
+            }
+            return res.status(200).json({
+                message: cursos
             });
         });
 });

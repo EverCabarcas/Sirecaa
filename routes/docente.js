@@ -14,23 +14,5 @@ router.use('/', function (req, res, next) {
         next();
     })
 });
-router.post('/asignatura/proyecto', function (req, res, next) {
-    curso.findOne({id_asignatura: req.body.id_asignatura, grupo: req.body.grupo}, function (err, c) {
-        if(!c){
-            return res.status(500).json({
-                estado : false
-            })
-        }
-        if(err){
-            return res.status(400).json({
-                estado : "Error en la operacion"
-            })
-        }
-        res.status(200).json({
-                estado : true,
-                dato : c
-        })
-    })
-});
 
 module.exports = router;
