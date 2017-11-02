@@ -142,7 +142,7 @@ router.post('/iniciarperiodoacademico', function (req, res, next) {
     CP.findOne({id_programa: req.body.id_programa, anno: req.body.anno, periodo: req.body.periodo }, function (err, resultado) {
         if(err){
             return res.status(500).json({
-                message: 'Error en la busqueda de un comprueba-periodo'
+                message: 'Error en la busqueda de un comprueba-periodo '+err
             });
         }
         if(!resultado){
@@ -213,7 +213,7 @@ router.post('/estadodelperiodo',function (req, res, next) {
     CP.findOne({id_programa: req.body.id_programa, anno: req.body.anno, periodo: req.body.periodo }, function (err, resultado) {
         if (err) {
             return res.status(500).json({
-                message: 'Error en la busqueda de un comprueba-periodo'
+                message: 'Error en la busqueda de un comprueba-periodo '+err
             });
         }
         if(resultado){
@@ -233,7 +233,7 @@ router.post('/modificaciondelperiodo',function (req, res, next) {
     CP.findOne({id_programa: req.body.id_programa, anno: req.body.anno, periodo: req.body.periodo }, function (err, resultado) {
         if (err) {
             return res.status(500).json({
-                message: 'Error al modificar'
+                message: 'Error al modificar '+err
             });
         }
         if(resultado){
@@ -251,7 +251,21 @@ router.post('/modificaciondelperiodo',function (req, res, next) {
 });
 
 router.post('/listaproyectosdocentes', function (req, res, next) {
-
+        proyecto_docente.find({id_programa: req.body.id_programa}, function (err, proyectos) {
+            if (err) {
+                return res.status(500).json({
+                    message: 'Error al listar los proyectos '+err
+                });
+            }
+            if(!proyectos.length){
+                return res.status(500).json({
+                    message: 'No hay proyectos docentes asociados a este programa'
+                });
+            }
+            return res.status(200).json({
+                message: proyectos
+            });
+        });
 });
 
 function horario(respuesta, req, res) {
