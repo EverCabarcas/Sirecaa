@@ -108,7 +108,7 @@ router.post('/proyectodocenteinfo', function (req, res, next) {
 });
 
 router.post('/proyectodocente', function (req, res, next) {
-    var fecha2 = date.getMilliseconds() + (30*24*60*60*1000);
+    var fecha2 = date.getTime() + (184*24*60*60*1000);
     var fecha6 = new Date(fecha2);
     // Milisegundos de 3 días mas suma3dias= 30*24*60*60*1000; (días * 24 horas * 60 minutos * 60 segundos * 1000 milésimas de segundo)
 
