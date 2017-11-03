@@ -16,7 +16,7 @@ router.use('/', function (req, res, next) {
     jwt.verify(req.query.token_sirecaa, 'sirecaa_secret', function (err, decoded) {
         if (err) {
             return res.status(401).json({
-                message: 'No Autenticado '+err
+                mensaje: 'No Autenticado '+err
             });
         }
         next();
@@ -26,16 +26,16 @@ router.post('/asignaturainfo', function (req, res, next) {
     curso.findOne({id_asignatura: req.body.id_asignatura, grupo: req.body.grupo}, function (err, c) {
         if(!c){
             return res.status(500).json({
-                message : 'Curso no encontrado'
+                mensaje: 'Curso no encontrado'
             });
         }
         if(err){
             return res.status(400).json({
-                message : 'Error en la operacion '+err
+                mensaje: 'Error en la operacion '+err
             });
         }
         res.status(200).json({
-            fetchcurso : c
+            mensaje: c
         });
     });
 });
@@ -44,12 +44,12 @@ router.post('/areainfo', function (req, res, next) {
     area.findById(req.body.id_area, function (err, area) {
         if(!area){
             return res.status(500).json({
-                message : 'Area no encontrada'
+                mensaje: 'Area no encontrada'
             });
         }
         if(err){
             return res.status(400).json({
-                message : 'Error en la operacion '+err
+                mensaje: 'Error en la operacion '+err
             });
         }
         res.status(200).json({
@@ -119,7 +119,7 @@ router.post('/proyectodocente', function (req, res, next) {
     proyecto.save(function (err, result) {
         if (err) {
             return res.status(500).json({
-                message: 'Un error a ocurrido '+err
+                mensaje: 'Un error a ocurrido '+err
             });
         }
         for(var i =0; i< req.body.temas.length; i++){
@@ -132,7 +132,7 @@ router.post('/proyectodocente', function (req, res, next) {
         }
 
         res.status(201).json({
-            message: 'Proyecto Docente Creado'
+            mensaje: 'Proyecto Docente Creado'
         });
 
     });
@@ -142,7 +142,7 @@ router.post('/iniciarperiodoacademico', function (req, res, next) {
     CP.findOne({id_programa: req.body.id_programa, anno: req.body.anno, periodo: req.body.periodo }, function (err, resultado) {
         if(err){
             return res.status(500).json({
-                message: 'Error en la busqueda de un comprueba-periodo '+err
+                mensaje: 'Error en la busqueda de un comprueba-periodo '+err
             });
         }
         if(!resultado){
@@ -167,7 +167,7 @@ router.post('/iniciarperiodoacademico', function (req, res, next) {
                 var data = JSON.parse(this.responseText); // Returned data, e.g., an HTML document.
                 if (status != 200) {
                     return res.status(status).json({
-                        message: 'Error de peticion: ' + status
+                        mensaje: 'Error de peticion: ' + status
                     });
                 }
                 for (var i = 0; i < data.length; i++) {
@@ -184,14 +184,14 @@ router.post('/iniciarperiodoacademico', function (req, res, next) {
                     c.save(function (err, respuesta) {
                         if (err) {
                             return res.status(500).json({
-                                message: 'error al guardar los horarios' + err
+                                mensaje: 'error al guardar los horarios' + err
                             });
                         }
                         horario(respuesta, req, res);
                     });
                 }
                 return res.status(200).json({
-                    message: 'Periodo academico iniciado con exito : Falta el nombre de la asignatura'
+                    mensaje: 'Periodo academico iniciado con exito : Falta el nombre de la asignatura'
                 });
             };
             request.open(method, url, async);
@@ -202,7 +202,7 @@ router.post('/iniciarperiodoacademico', function (req, res, next) {
 
         }else{
             return res.status(200).json({
-                message: 'El periodo academico ya ha sido iniciado para este programa'
+                mensaje: 'El periodo academico ya ha sido iniciado para este programa'
             });
         }
 
@@ -214,17 +214,17 @@ router.post('/estadodelperiodo',function (req, res, next) {
     CP.findOne({id_programa: req.body.id_programa, anno: req.body.anno, periodo: req.body.periodo }, function (err, resultado) {
         if (err) {
             return res.status(500).json({
-                message: 'Error en la busqueda de un comprueba-periodo '+err
+                mensaje: 'Error en la busqueda de un comprueba-periodo '+err
             });
         }
         if(resultado){
             return res.status(200).json({
-                message: resultado.estado
+                mensaje: resultado.estado
             });
         }
         if(!resultado){
             return res.status(500).json({
-                message: false
+                mensaje: false
             });
         }
     });
@@ -234,18 +234,18 @@ router.post('/modificaciondelperiodo',function (req, res, next) {
     CP.findOne({id_programa: req.body.id_programa, anno: req.body.anno, periodo: req.body.periodo }, function (err, resultado) {
         if (err) {
             return res.status(500).json({
-                message: 'Error al modificar '+err
+                mensaje: 'Error al modificar '+err
             });
         }
         if(resultado){
             resultado.estado = req.body.estado;
             resultado.save();
             return res.status(200).json({
-                    message: 'Exito al modificar el periodo'
+                mensaje: 'Exito al modificar el periodo'
             });
         }else{
             return res.status(500).json({
-                message: 'no se ha creado el periodo ingresado'
+                mensaje: 'no se ha creado el periodo ingresado'
             });
         }
     });
@@ -255,16 +255,16 @@ router.post('/listaproyectosdocente', function (req, res, next) {
         proyecto_docente.find({id_programa: req.body.id_programa}, function (err, proyectos) {
             if (err) {
                 return res.status(500).json({
-                    message: 'Error al listar los proyectos '+err
+                    mensaje: 'Error al listar los proyectos '+err
                 });
             }
             if(!proyectos.length){
                 return res.status(500).json({
-                    message: 'No hay proyectos docentes asociados a este programa'
+                    mensaje: 'No hay proyectos docentes asociados a este programa'
                 });
             }
             return res.status(200).json({
-                message: proyectos
+                mensaje: proyectos
             });
         });
 });
@@ -273,18 +273,18 @@ router.post('/asignarproyectodocente', function (req, res, next) {
         curso.findOne({id_asignatura: req.body.id_asignatura , grupo: req.body.grupo, periodo: req.body.periodo, anno: req.body.anno }, function (err, curso) {
             if (err) {
                 return res.status(500).json({
-                    message: 'Error en la asignacion de proyecto docente '+err
+                    mensaje: 'Error en la asignacion de proyecto docente '+err
                 });
             }
             if(!curso){
                 return res.status(500).json({
-                    message: 'El curso que intenta buscar no existe'+err
+                    mensaje: 'El curso que intenta buscar no existe'+err
                 });
             }
             curso.id_proyecto = req.body.id_proyecto;
             curso.save();
             return res.status(200).json({
-                message: 'Proyecto docente asignado con exito'
+                mensaje: 'Proyecto docente asignado con exito'
             });
         });
 });
@@ -293,16 +293,16 @@ router.post('/cursosdeunproyecto', function (req, res, next) {
         curso.find({id_proyecto: req.body.id_proyecto}, function (err, cursos) {
             if (err) {
                 return res.status(500).json({
-                    message: 'Error al buscar los cursos de un proyecto docente '+err
+                    mensaje: 'Error al buscar los cursos de un proyecto docente '+err
                 });
             }
             if(!cursos.length){
                 return res.status(500).json({
-                    message: 'No hay cursos asociados a este proyecto docente'
+                    mensaje: 'No hay cursos asociados a este proyecto docente'
                 });
             }
             return res.status(200).json({
-                message: cursos
+                mensaje: cursos
             });
         });
 });
@@ -322,7 +322,7 @@ function horario(respuesta, req, res) {
         var data = JSON.parse(this.responseText); // Returned data, e.g., an HTML document.
         if (status != 200) {
             return res.status(status).json({
-                message: 'Error de peticion: ' + status
+                mensaje: 'Error de peticion: ' + status
             });
         }
 

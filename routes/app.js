@@ -33,12 +33,12 @@ router.post('/signin', function (req, res, next) {
         var data = JSON.parse(this.responseText); // Returned data, e.g., an HTML document.
         if(status != 200){
             return res.status(status).json({
-               message: 'Error de Autenticación: '+ status
+                mensaje: 'Error de Autenticación: '+ status
             });
         }
         var token = jwt.sign({}, 'sirecaa_secret', {expiresIn: 1800 });
         return res.status(200).json({
-            message:  data,
+            mensaje:  data,
             token_udc: request.getResponseHeader('authorization'),
             token_sirecaa : token
         });
