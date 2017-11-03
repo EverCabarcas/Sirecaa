@@ -63,34 +63,34 @@ router.post('/proyectodocenteinfo', function (req, res, next) {
     curso.findOne({id_asignatura: req.body.id_asignatura, grupo: req.body.grupo, anno: req.body.anno, periodo: req.body.periodo }, function (err, curso) {
         if(!curso){
             return res.status(500).json({
-                message : 'Curso no encontrado'
+                mensaje: 'Curso no encontrado'
             });
         }
         if(err){
             return res.status(400).json({
-                message : 'Error en la operacion '+err
+                mensaje: 'Error en la operacion '+err
             });
         }
         if(curso.id_proyecto == 'vacio'){
             return res.status(500).json({
-                message : 'No hay proyecto docente asociado al curso'
+                mensaje: 'No hay proyecto docente asociado al curso'
             });
         }else {
             proyecto_docente.findById(curso.id_proyecto, function (err, proyecto) {
                 if(err){
                     return res.status(400).json({
-                        message : 'Error en la operacion '+err
+                        mensaje: 'Error en la operacion '+err
                     });
                 }
                 Tema.find({id_proyecto: curso.id_proyecto}, function (err, temas) {
                     if (!temas) {
                         return res.status(500).json({
-                            message: 'El Proyecto Docente no tiene temas asociados'
+                            mensaje: 'El Proyecto Docente no tiene temas asociados'
                         });
                     }
                     if (err) {
                         return res.status(400).json({
-                            message: 'Error en la operacion ' + err
+                            mensaje: 'Error en la operacion ' + err
                         });
                     }
                     res.status(200).json({
