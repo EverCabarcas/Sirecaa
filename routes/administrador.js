@@ -117,8 +117,8 @@ router.post('/proyectodocente', function (req, res, next) {
         objetivos: req.body.objetivos,
         competencias: req.body.competencias,
         bibliografia: req.body.bibliografia,
-        fecha_inicio: date.getDate(), // milisegundos ''+(date.getDay())+'/'+(date.getMonth()+1)+'/'+date.getFullYear()
-        fecha_fin:    fecha6.getDate()               //''+(date.getDay())+'/'+((date.getMonth()+1)+6)+'/'+date.getFullYear()
+        fecha_inicio: date, // milisegundos ''+(date.getDay())+'/'+(date.getMonth()+1)+'/'+date.getFullYear()
+        fecha_fin:    fecha6               //''+(date.getDay())+'/'+((date.getMonth()+1)+6)+'/'+date.getFullYear()
     });
     proyecto.save(function (err, result) {
         if (err) {
