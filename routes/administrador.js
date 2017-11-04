@@ -311,6 +311,26 @@ router.post('/cursosdeunproyecto', function (req, res, next) {
         });
 });
 
+router.post('/temasdeunproyecto', function (req, res ,next) {
+    Tema.find({id_proyecto: req.id_proyecto}, function (err, temas) {
+        if (err) {
+            return res.status(500).json({
+                mensaje: 'Error al buscar los temas de un proyecto docente '+err
+            });
+        }
+
+        if(!temas.length){
+            return res.status(500).json({
+                mensaje: 'No hay temas asociados a este proyecto docente'
+            });
+        }
+
+        return res.status(200).json({
+            mensaje: temas
+        });
+    });
+});
+
 function horario(respuesta, req, res) {
     var url = "http://190.242.62.234:8080/SIRECAARST/programacion/horario";
     var method = "POST";
