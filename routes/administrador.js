@@ -312,7 +312,7 @@ router.post('/cursosdeunproyecto', function (req, res, next) {
 });
 
 router.post('/temasdeunproyecto', function (req, res ,next) {
-    Tema.find({id_proyecto: req.id_proyecto}, function (err, temas) {
+    Tema.find({id_proyecto: req.body.id_proyecto}, function (err, temas) {
         if (err) {
             return res.status(500).json({
                 mensaje: 'Error al buscar los temas de un proyecto docente '+err
