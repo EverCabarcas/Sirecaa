@@ -404,7 +404,7 @@ router.post('/docentesdeunprograma', function (req, res, next) {
         }
 
         return res.status(200).json({
-            mensaje: array
+            mensaje: 'si'
         });
     };
 
