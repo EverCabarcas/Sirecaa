@@ -7,7 +7,9 @@ var schema = new Schema({
     competencias: [{type: String, required: true}],
     bibliografia: [{type: String, required: true}],
     fecha_inicio: {type: Date, required: true},
-    fecha_fin: {type: Date, required: true}
+    fecha_fin: {type: Date, required: true},
+    anno: {type: String, required: true},
+    periodo:{type: String, required: true}
 });
 
 module.exports = mongoose.model('Proyecto_Docente', schema);

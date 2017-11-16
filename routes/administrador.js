@@ -41,22 +41,43 @@ router.post('/asignaturainfo', function (req, res, next) {
 });
 
 router.post('/areainfo', function (req, res, next) {
-    area.findById(req.body.id_area, function (err, area) {
-        if(!area){
-            return res.status(500).json({
-                mensaje: 'Area no encontrada'
-            });
-        }
-        if(err){
-            return res.status(400).json({
-                mensaje: 'Error en la operacion '+err
-            });
-        }
-        res.status(200).json({
-            nombre : area.nombre,
-            id_docente : area.id_docente
-        });
-    });
+   curso.findOne({id_asignatura: req.body.id_asignatura, anno:req.body.anno, periodo: req.body.periodo},function (err, curso) {
+       if(err){
+           return res.status(400).json({
+               mensaje: 'Error en la operacion de busqueda de area de un curso'+err
+           });
+       }
+       if(!curso){
+           return res.status(500).json({
+               mensaje: 'Curso no encontrado'
+           });
+       }
+       if(curso.id_area == 'vacio'){
+           return res.status(500).json({
+               mensaje: 'Curso no tiene area asociada'
+           });
+       }
+       area.findById(curso.id_area, function (err, area) {
+           if(!area){
+               return res.status(500).json({
+                   mensaje: 'Area no encontrada'
+               });
+           }
+           if(err){
+               return res.status(400).json({
+                   mensaje: 'Error en la operacion '+err
+               });
+           }
+           res.status(200).json({
+               nombre : area.nombre,
+               id_docente : area.id_docente,
+               nombre_docente: area.nombre_docente,
+               _id: area._id
+           });
+       });
+   });
+
+
 });
 
 router.post('/proyectodocenteinfo', function (req, res, next) {
@@ -98,6 +119,8 @@ router.post('/proyectodocenteinfo', function (req, res, next) {
                         objetivos: proyecto.objetivos,
                         competencias: proyecto.competencias,
                         bibliografia: proyecto.bibliografia,
+                        anno: proyecto.anno,
+                        periodo: proyecto.periodo,
                         temas: temas
                     });
                 });
@@ -117,6 +140,8 @@ router.post('/proyectodocente', function (req, res, next) {
         objetivos: req.body.objetivos,
         competencias: req.body.competencias,
         bibliografia: req.body.bibliografia,
+        anno: req.body.anno,
+        periodo: req.body.periodo,
         fecha_inicio: date, // milisegundos ''+(date.getDay())+'/'+(date.getMonth()+1)+'/'+date.getFullYear()
         fecha_fin:    fecha6               //''+(date.getDay())+'/'+((date.getMonth()+1)+6)+'/'+date.getFullYear()
     });
@@ -329,6 +354,65 @@ router.post('/temasdeunproyecto', function (req, res ,next) {
             mensaje: temas
         });
     });
+});
+
+router.post('/creararea', function (req, res, next) {
+    var Area = new area({
+        nombre: req.body.nombre,
+        id_programa: req.body.id_programa,
+        id_docente: req.body.id_docente,
+        nombre_docente: req.body.nombre_docente
+    });
+    Area.save(function (err, result) {
+        if (err) {
+            return res.status(500).json({
+                mensaje: 'Un error a ocurrido al crear el Area '+err
+            });
+        }
+        res.status(201).json({
+            mensaje: 'Area creada con exito'
+        });
+    });
+});
+
+router.post('/docentesdeunprograma', function (req, res, next) {
+    var url = "http://190.242.62.234:8080/SIRECAARST/programacion/xprograma";
+    var method = "POST";
+    var postData = 'id_programa='+req.body.id_programa+'&anno='+req.body.anno+'&periodo='+req.body.periodo+'&token='+req.body.token_udc;
+
+    var async = true;
+
+    var request = new XMLHttpRequest();
+
+    request.onload = function () {
+
+        var status = request.status;
+        var data = JSON.parse(this.responseText);
+        if(status != 200){
+            return res.status(status).json({
+                mensaje: 'Error de Autenticación: '+ status
+            });
+        }
+
+        var docentes_programa = {
+            id: String,
+            nombre: String
+        };
+        var array = [docentes_programa];
+        for(var i =0; i< data.length; i++){
+            array.push({id: data[i].id_docente, nombre: data[i].nombre_docente});
+        }
+
+        return res.status(200).json({
+            mensaje: array
+        });
+    };
+
+    request.open(method, url, async);
+
+    request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+    request.send(postData);
 });
 
 function horario(respuesta, req, res) {
