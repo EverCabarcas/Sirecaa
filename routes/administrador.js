@@ -431,6 +431,115 @@ router.post('/docentesdeunprograma', function (req, res, next) {
     request.send(postData);
 });
 
+router.post('/cursosdeunprograma', function (req, res, next) {
+    curso.find({id_programa: req.body.id_programa, anno: req.body.anno, periodo: req.body.periodo}, function (err, cursos) {
+        if (err) {
+            return res.status(500).json({
+                mensaje: 'Un error al buscar los cursos '+err
+            });
+        }
+        if(!cursos.length){
+            return res.status(500).json({
+                mensaje: 'No hay cursos asociados a este programa'
+            });
+        }
+        return res.status(200).json({
+            mensaje: cursos
+        });
+    });
+
+});
+
+router.post('/asignarptoyectoavarios', function (req, res, next) {
+    for(var i = 0; i< req.body.cursos.length; i++) {
+        curso.findOne({id_asignatura: req.body.cursos[i].id_asignatura, grupo:req.body.cursos[i].grupo, anno: req.body.anno, periodo: req.body.periodo }, function (err, curso) {
+            if (err) {
+                return res.status(500).json({
+                    mensaje: 'Error al modificar el proyecto para una asignatura'+err
+                });
+            }
+            if(curso){
+                curso.id_proyecto = req.body.id_proyecto;
+                curso.save();
+            }else{
+                return res.status(500).json({
+                    mensaje: 'Hay un curso que no existe'+err // este curso que no existe esta dentro del array que se manda desde el front
+                });
+            }
+
+        });
+    }
+    return res.status(200).json({
+        mensaje: 'Todas las asignaciones han sido exitosas'
+    });
+});
+
+router.post('/obtenerareas', function (req, res, next) {
+    area.find({id_programa: req.body.id_programa}, function (err, areas) {
+        if (err) {
+            return res.status(500).json({
+                mensaje: 'Error al obtener todas las areas'+err
+            });
+        }
+
+        if(!areas.length){
+            return res.status(500).json({
+                mensaje: 'No hay areas asociadas al programa academico'
+            });
+        }
+
+        return res.status(200).json({
+            mensaje: areas
+        });
+    });
+});
+
+router.post('/asignararea', function (req, res, next) {
+   curso.findOne({id_asignatura: req.body.id_asignatura, grupo: req.body.grupo, anno: req.body.anno, periodo: req.body.periodo}, function (err, curso) {
+       if (err) {
+           return res.status(500).json({
+               mensaje: 'Error al modificar el area para la asignatura '+err
+           });
+       }
+       if(curso){
+           curso.id_area = req.body.id_area;
+           curso.save();
+       }else{
+           return res.status(500).json({
+               mensaje: 'Este curso no existe'
+           });
+       }
+
+       return res.status(200).json({
+           mensaje: 'Area asignada satisfactoriamente'
+       });
+   }); 
+});
+
+router.post('/asignarareaavarios', function (req, res, next) {
+    for(var i = 0; i< req.body.cursos.length; i++) {
+        curso.findOne({id_asignatura: req.body.cursos[i].id_asignatura, grupo:req.body.cursos[i].grupo, anno: req.body.anno, periodo: req.body.periodo }, function (err, curso) {
+            if (err) {
+                return res.status(500).json({
+                    mensaje: 'Error al modificar el area para una asignatura'+err
+                });
+            }
+            if(curso){
+                curso.id_area = req.body.id_area;
+                curso.save();
+            }else{
+                return res.status(500).json({
+                    mensaje: 'Hay un curso que no existe'+err // este curso que no existe esta dentro del array que se manda desde el front
+                });
+            }
+
+        });
+    }
+    return res.status(200).json({
+        mensaje: 'Todas las asignaciones han sido exitosas'
+    });
+});
+
 function horario(respuesta, req, res) {
     var url = "http://190.242.62.234:8080/SIRECAARST/programacion/horario";
     var method = "POST";
