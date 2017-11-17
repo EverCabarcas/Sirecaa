@@ -433,7 +433,7 @@ router.post('/docentesdeunprograma', function (req, res, next) {
     request.send(postData);
 });
 
-router.post('/cursosdeunprograma', function (req, res, next) {
+/*router.post('/cursosdeunprograma', function (req, res, next) {
     curso.find({id_programa: req.body.id_programa, anno: req.body.anno, periodo: req.body.periodo}, function (err, cursos) {
         if (err) {
             return res.status(500).json({
@@ -540,7 +540,7 @@ router.post('/asignarareaavarios', function (req, res, next) {
     return res.status(200).json({
         mensaje: 'Todas las asignaciones han sido exitosas'
     });
-});
+});*/
 
 function horario(respuesta, req, res) {
     var url = "http://190.242.62.234:8080/SIRECAARST/programacion/horario";
