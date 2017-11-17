@@ -394,11 +394,11 @@ router.post('/docentesdeunprograma', function (req, res, next) {
             });
         }
 
-        var docentes_programa = {
+        /*var docentes_programa = {
             id: String,
             nombre: String
-        };
-        var array = [docentes_programa];
+        };*/
+        var array = [];
         for(var i =0; i< data.length; i++){
             array.push({id: data[i].id_docente, nombre: data[i].nombre_docente});
         }
