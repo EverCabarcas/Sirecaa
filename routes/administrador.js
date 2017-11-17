@@ -401,16 +401,10 @@ router.post('/docentesdeunprograma', function (req, res, next) {
             array.push({id: data[i].id_docente, nombre: data[i].nombre_docente});
         }
         var aux = array;
-        var cont=0;
         for(var j = 0; j< array.length; j++){
-            cont =0;
             for(var k = 0; k< array.length; k++) {
-                if(array[j].id == array[k].id){
-                    cont++;
-                }
-                if(cont >1){
-                    aux.splice(array.indexOf(array[k]));
-
+                if((array[j].id == array[k].id) && (j != k)){
+                    aux.splice(k, 1);
                 }
             }
 
