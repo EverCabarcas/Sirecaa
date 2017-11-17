@@ -375,7 +375,7 @@ router.post('/creararea', function (req, res, next) {
     });
 });
 
-/*router.post('/docentesdeunprograma', function (req, res, next) {
+router.post('/docentesdeunprograma', function (req, res, next) {
     var url = "http://190.242.62.234:8080/SIRECAARST/programacion/xprograma";
     var method = "POST";
     var postData = 'id_programa='+req.body.id_programa+'&anno='+req.body.anno+'&periodo='+req.body.periodo+'&token='+req.body.token_udc;
@@ -400,7 +400,7 @@ router.post('/creararea', function (req, res, next) {
         for(var i =0; i< data.length; i++){
             array.push({id: data[i].id_docente, nombre: data[i].nombre_docente});
         }
-        var aux = array;
+        var aux = array.slice();
         var aux2 = [];
         var cont=0;
         for(var j = 0; j< array.length; j++){
@@ -428,7 +428,7 @@ router.post('/creararea', function (req, res, next) {
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
     request.send(postData);
-});*/
+});
 
 /*router.post('/cursosdeunprograma', function (req, res, next) {
     curso.find({id_programa: req.body.id_programa, anno: req.body.anno, periodo: req.body.periodo}, function (err, cursos) {
