@@ -410,14 +410,14 @@ router.post('/docentesdeunprograma', function (req, res, next) {
                 }
             }
             if(cont<2){
-                aux.push({id: array[j].id, nombre: array[j].nombre});
+                aux2.push({id: array[j].id, nombre: array[j].nombre});
             }
             cont=0;
         }
 
         return res.status(200).json({
             mensaje: array,
-            mensaje2: aux
+            mensaje2: aux2
         });
     };
 
