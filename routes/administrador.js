@@ -406,7 +406,7 @@ router.post('/docentesdeunprograma', function (req, res, next) {
         var cont=0;
         for(var j = 0; j< array.length; j++){
             for(var k = 0 ; k < array.length; k++){
-                if(array[j] == array[k]){
+                if(array[j].id == array[k].id){
                     cont++;
                 }
             }
