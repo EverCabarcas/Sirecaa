@@ -403,12 +403,12 @@ router.post('/docentesdeunprograma', function (req, res, next) {
             array.push({id: data[i].id_docente, nombre: data[i].nombre_docente});
         }
 
-
+        return res.status(200).json({
+            mensaje: 'si'
+        });
     };
 
-    return res.status(200).json({
-        mensaje: 'si'
-    });
+
 
     request.open(method, url, async);
 
