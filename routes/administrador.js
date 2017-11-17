@@ -407,7 +407,7 @@ router.post('/docentesdeunprograma', function (req, res, next) {
             /*if(aux.indexOf(array[j].id) == -1){
                 aux.push(array[j]);
             }*/
-            cont = array.indexOf("73183419  ");
+            cont = array[j].indexOf("73183419  ");
         }
 
         return res.status(200).json({
