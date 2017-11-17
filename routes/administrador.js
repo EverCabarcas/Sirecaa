@@ -410,6 +410,13 @@ router.post('/docentesdeunprograma', function (req, res, next) {
             }
 
         }
+
+        for(var s = 0; s< array.length; s++){
+            if(array[s].id == null){
+                array.indexOf(s, 1);
+            }
+        }
+
         return res.status(200).json({
             mensaje: array,
             mensaje2: aux
