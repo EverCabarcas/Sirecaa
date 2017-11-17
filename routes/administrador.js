@@ -41,7 +41,7 @@ router.post('/asignaturainfo', function (req, res, next) {
 });
 
 router.post('/areainfo', function (req, res, next) {
-   curso.findOne({id_asignatura: req.body.id_asignatura, anno:req.body.anno, periodo: req.body.periodo},function (err, curso) {
+   curso.findOne({id_asignatura: req.body.id_asignatura, grupo: req.body.grupo ,anno:req.body.anno, periodo: req.body.periodo},function (err, curso) {
        if(err){
            return res.status(400).json({
                mensaje: 'Error en la operacion de busqueda de area de un curso'+err
