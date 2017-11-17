@@ -402,28 +402,23 @@ router.post('/docentesdeunprograma', function (req, res, next) {
         }
 
         var aux = array;
+        var aux2 = [];
         var cont=0;
         for(var j = 0; j< array.length; j++){
+            cont =0;
             for(var k = 0; k< array.length; k++) {
-                if (array[j].id == aux[k].id ) {
+                if(array[j].id == array[k].id){
                     cont++;
                 }
-                if(cont >= 2){
-                    var index = array.indexOf(array[k]);
-                    aux.splice(index);
-                    //aux.splice(array[k], 1);
+                if(cont >1){
+                    aux2.push(k);
                 }
-                /*if(aux.indexOf(array[j].id) == -1){
-                    aux.push(array[j]);
-                }*/
             }
-
-            cont =0;
 
         }
         return res.status(200).json({
             mensaje: array,
-            mensaje2: aux
+            mensaje2: aux2
         });
 
     };
