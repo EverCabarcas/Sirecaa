@@ -400,19 +400,12 @@ router.post('/docentesdeunprograma', function (req, res, next) {
         for(var i =0; i< data.length; i++){
             array.push({id: data[i].id_docente, nombre: data[i].nombre_docente});
         }
-        var aux = array.slice();
-        var aux2 = [];
+        var aux = [];
         var cont=0;
         for(var j = 0; j< array.length; j++){
-            for(var k = 0 ; k < aux.length; k++){
-                if((array[j].nombre == aux[k].nombre) && (array[j].id == aux[k].id) && array[j].nombre!= null && aux[k].nombre!= null && array[j].id != null && aux[k].id!= null){
-                    cont++;
-                }
+            if(aux.indexOf(array[j].nombre) == -1){
+                aux.push(array[j]);
             }
-            if(cont<2){
-                aux2.push({id: array[j].id, nombre: array[j].nombre});
-            }
-            cont=0;
         }
 
         return res.status(200).json({
