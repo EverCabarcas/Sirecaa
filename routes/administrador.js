@@ -401,7 +401,6 @@ router.post('/docentesdeunprograma', function (req, res, next) {
             array.push({id: data[i].id_docente, nombre: data[i].nombre_docente});
         }
         var aux = array;
-        var aux2 = [];
         var cont=0;
         for(var j = 0; j< array.length; j++){
             cont =0;
@@ -410,8 +409,8 @@ router.post('/docentesdeunprograma', function (req, res, next) {
                     cont++;
                 }
                 if(cont >1){
-                    aux2.push(array[j]);
-                    return;
+                    aux.splice(array.indexOf(array[k]));
+
                 }
             }
 
