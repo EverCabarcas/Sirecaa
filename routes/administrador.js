@@ -410,7 +410,7 @@ router.post('/docentesdeunprograma', function (req, res, next) {
                 }
                 if(cont >= 2){
                     var index = array.indexOf(array[k]);
-                    aux[index].remove();
+                    aux.splice(index);
                     //aux.splice(array[k], 1);
                 }
                 /*if(aux.indexOf(array[j].id) == -1){
