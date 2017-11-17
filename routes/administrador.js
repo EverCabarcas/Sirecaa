@@ -410,7 +410,7 @@ router.post('/docentesdeunprograma', function (req, res, next) {
                     cont++;
                 }
             }
-            if(cont>2){
+            if(cont<2){
                 aux.push({id: array[j].id, nombre: array[j].nombre});
             }
             cont=0;
