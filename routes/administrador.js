@@ -400,8 +400,9 @@ router.post('/docentesdeunprograma', function (req, res, next) {
         for(var i =0; i< data.length; i++){
             array.push({id: data[i].id_docente, nombre: data[i].nombre_docente});
         }
+        var uniqueItems = Array.from(new Set(array));
 
-        var aux = array;
+        /*var aux = array;
         var aux2 = [];
         var cont=0;
         for(var j = 0; j< array.length; j++){
@@ -415,10 +416,10 @@ router.post('/docentesdeunprograma', function (req, res, next) {
                 }
             }
 
-        }
+        }*/
         return res.status(200).json({
             mensaje: array,
-            mensaje2: aux2
+            mensaje2: uniqueItems
         });
 
     };
