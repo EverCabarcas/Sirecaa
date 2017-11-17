@@ -411,7 +411,7 @@ router.post('/docentesdeunprograma', function (req, res, next) {
                 }
             }
             if(!(cont>1)){
-                aux.push({id: array[j].id_docente, nombre: array[j].nombre_docente});
+                aux.push({id: array[j].id, nombre: array[j].nombre});
             }
         }
 
