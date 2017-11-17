@@ -399,12 +399,22 @@ router.post('/docentesdeunprograma', function (req, res, next) {
             nombre: String
         };*/
         var array = [];
+        var arrayt = [];
         for(var i =0; i< data.length; i++){
             array.push({id: data[i].id_docente, nombre: data[i].nombre_docente});
         }
 
+        for(var j = 0; j < array.length; j++){
+                for(var k = 0; k < arrayt.length; k++){
+                    if(!(array[j] == arrayt[k])){
+                        arrayt.push(array[j]);
+                    }
+                }
+        }
+
         return res.status(200).json({
-            mensaje: array
+            mensaje: array,
+            mensaje2: arrayt
         });
     };
 
