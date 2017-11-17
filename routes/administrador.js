@@ -411,7 +411,7 @@ router.post('/docentesdeunprograma', function (req, res, next) {
                 }
                 if(cont >1){
                     aux2.push(array[j]);
-                    continue;
+                    return;
                 }
             }
 
