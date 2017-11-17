@@ -423,7 +423,7 @@ router.post('/docentesdeunprograma', function (req, res, next) {
     request.send(postData);
 });
 
-/*router.post('/cursosdeunprograma', function (req, res, next) {
+router.post('/cursosdeunprograma', function (req, res, next) {
     curso.find({id_programa: req.body.id_programa, anno: req.body.anno, periodo: req.body.periodo}, function (err, cursos) {
         if (err) {
             return res.status(500).json({
@@ -440,7 +440,7 @@ router.post('/docentesdeunprograma', function (req, res, next) {
         });
     });
 
-});*/
+});
 
 router.post('/asignarptoyectoavarios', function (req, res, next) {
     for(var i = 0; i< req.body.cursos.length; i++) {
