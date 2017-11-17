@@ -400,7 +400,8 @@ router.post('/docentesdeunprograma', function (req, res, next) {
         for(var i =0; i< data.length; i++){
             array.push({id: data[i].id_docente, nombre: data[i].nombre_docente});
         }
-        var aux = array;
+        var aux = [];
+        aux = array;
         for(var j = 0; j< array.length; j++){
             for(var k = 0; k< array.length; k++) {
                 if((array[j].id == array[k].id) && (j != k)){
