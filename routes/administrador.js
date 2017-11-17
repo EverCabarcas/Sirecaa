@@ -412,7 +412,7 @@ router.post('/docentesdeunprograma', function (req, res, next) {
         }
 
         for(var s = 0; s< array.length; s++){
-            if(array[s].id == null){
+            if(array[s] == null){
                 array.indexOf(s, 1);
             }
         }
