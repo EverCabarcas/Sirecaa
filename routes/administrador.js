@@ -412,7 +412,7 @@ router.post('/docentesdeunprograma', function (req, res, next) {
         }
 
         for(var s = 0; s< array.length; s++){
-            if(array[s] == null){
+            if(array[s].id == null){
                 array.splice(s, 1);
             }
         }
