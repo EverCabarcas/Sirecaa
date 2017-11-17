@@ -413,6 +413,7 @@ router.post('/docentesdeunprograma', function (req, res, next) {
             if(!(cont>1)){
                 aux.push({id: array[j].id, nombre: array[j].nombre});
             }
+            cont=0;
         }
 
         return res.status(200).json({
