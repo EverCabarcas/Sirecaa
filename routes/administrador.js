@@ -403,7 +403,7 @@ router.post('/docentesdeunprograma', function (req, res, next) {
         var aux = [];
         var cont=0;
         for(var j = 0; j< array.length; j++){
-            if(aux.indexOf(array[j].nombre) == -1){
+            if(aux.indexOf(array[j]) == -1){
                 aux.push(array[j]);
             }
         }
