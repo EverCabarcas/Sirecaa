@@ -394,10 +394,7 @@ router.post('/docentesdeunprograma', function (req, res, next) {
             });
         }
 
-        /*var docentes_programa = {
-            id: String,
-            nombre: String
-        };*/
+
         var array = [];
 
         for(var i =0; i< data.length; i++){
@@ -407,7 +404,7 @@ router.post('/docentesdeunprograma', function (req, res, next) {
         var aux2 = [];
         var cont=0;
         for(var j = 0; j< array.length; j++){
-            for(var k = 0 ; k < array.length; k++){
+            for(var k = 0 ; k < aux.length; k++){
                 if(array[j] == aux[k]){
                     cont++;
                 }
@@ -432,7 +429,8 @@ router.post('/docentesdeunprograma', function (req, res, next) {
 
     request.send(postData);
 });
-router.post('/cursosdeunprograma', function (req, res, next) {
+
+/*router.post('/cursosdeunprograma', function (req, res, next) {
     curso.find({id_programa: req.body.id_programa, anno: req.body.anno, periodo: req.body.periodo}, function (err, cursos) {
         if (err) {
             return res.status(500).json({
@@ -449,7 +447,7 @@ router.post('/cursosdeunprograma', function (req, res, next) {
         });
     });
 
-});
+});*/
 
 router.post('/asignarptoyectoavarios', function (req, res, next) {
     for(var i = 0; i< req.body.cursos.length; i++) {
