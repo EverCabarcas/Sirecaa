@@ -410,7 +410,7 @@ router.post('/docentesdeunprograma', function (req, res, next) {
 
         return res.status(200).json({
             mensaje: array,
-            mensaje2: aux2
+            mensaje2: aux
         });
     };
 
