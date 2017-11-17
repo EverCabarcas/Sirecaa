@@ -405,7 +405,7 @@ router.post('/docentesdeunprograma', function (req, res, next) {
         var cont=0;
         for(var j = 0; j< array.length; j++){
             for(var k = 0 ; k < aux.length; k++){
-                if(array[j] == aux[k]){
+                if((array[j].nombre.localeCompare(aux[k].nombre) ==0)&& (array[j].id.localeCompare(aux[k].id) ==0) && array[j].nombre!= null && aux[k].nombre!= null && array[j].id != null && aux[k].id!= null){
                     cont++;
                 }
             }
