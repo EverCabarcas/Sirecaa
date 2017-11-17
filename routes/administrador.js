@@ -403,18 +403,21 @@ router.post('/docentesdeunprograma', function (req, res, next) {
         var aux = [];
         var cont=0;
         for(var j = 0; j< array.length; j++){
-                if(array[j].id == "73183419  "){
+            for(var k = 0; k< array.length; k++) {
+                if (array[j].id == array[k].id ) {
                     cont++;
                 }
-            /*if(aux.indexOf(array[j].id) == -1){
-                aux.push(array[j]);
-            }*/
+                /*if(aux.indexOf(array[j].id) == -1){
+                    aux.push(array[j]);
+                }*/
+            }
+            return res.status(200).json({
+                mensaje: array,
+                mensaje2: cont
+            });
         }
 
-        return res.status(200).json({
-            mensaje: array,
-            mensaje2: cont
-        });
+
     };
 
 
