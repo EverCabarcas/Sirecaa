@@ -161,7 +161,8 @@ router.post('/proyectodocente', function (req, res, next) {
         }
 
         res.status(201).json({
-            mensaje: 'Proyecto Docente Creado'
+            mensaje: 'Proyecto Docente Creadevercabarcasmallarinoo',
+            id_proyecto: result._id
         });
 
     });
@@ -375,7 +376,7 @@ router.post('/creararea', function (req, res, next) {
     });
 });
 
-router.post('/docentesdeunprograma', function (req, res, next) {
+router.post('/docentesdeunprograma', function (req, res, next){
     var url = "http://190.242.62.234:8080/SIRECAARST/programacion/xprograma";
     var method = "POST";
     var postData = 'id_programa='+req.body.id_programa+'&anno='+req.body.anno+'&periodo='+req.body.periodo+'&token='+req.body.token_udc;
