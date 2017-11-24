@@ -161,7 +161,7 @@ router.post('/proyectodocente', function (req, res, next) {
         }
 
         res.status(201).json({
-            mensaje: 'Proyecto Docente Creadevercabarcasmallarinoo',
+            mensaje: 'Proyecto Docente Creado',
             id_proyecto: result._id
         });
 
