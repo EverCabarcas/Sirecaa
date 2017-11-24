@@ -161,7 +161,7 @@ router.post('/proyectodocente', function (req, res, next) {
         }
 
         res.status(201).json({
-            mensaje: 'Proyecto Docente Creado',
+            mensaje: 'Proyecto Docente Creado con Éxito',
             id_proyecto: result._id
         });
 
