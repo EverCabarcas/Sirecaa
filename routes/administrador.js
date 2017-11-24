@@ -468,6 +468,9 @@ router.post('/asignarptoyectoavarios', function (req, res, next) {
                     mensaje: 'Hay un curso que no existe'+err // este curso que no existe esta dentro del array que se manda desde el front
                 });
             }
+            return res.status(200).json({
+                mensaje: 'Pase'
+            });
 
         });
     }
