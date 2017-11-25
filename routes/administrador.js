@@ -542,6 +542,26 @@ router.post('/asignarareaavarios', function (req, res, next) {
     });
 });
 
+router.post('/cursosdeunarea', function (req, res, next) {
+    curso.find({id_area: req.body.id_area, anno: req.body.anno, periodo: req.body.periodo}, function (err, cursos) {
+        if (err) {
+            return res.status(500).json({
+                mensaje: 'Error al obtener los cursos de esta area '+err
+            });
+        }
+
+        if(!cursos.length){
+            return res.status(500).json({
+                mensaje: 'No hay cursos asociados a esta area'
+            });
+        }
+
+        return res.status(200).json({
+            mensaje: cursos
+        });
+    });
+});
+
 function horario(respuesta, req, res) {
     var url = "http://190.242.62.234:8080/SIRECAARST/programacion/horario";
     var method = "POST";
