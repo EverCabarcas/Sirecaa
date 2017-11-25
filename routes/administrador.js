@@ -371,7 +371,8 @@ router.post('/creararea', function (req, res, next) {
             });
         }
         res.status(201).json({
-            mensaje: 'Area creada con exito'
+            mensaje: 'Area creada con exito',
+            id_area: result._id
         });
     });
 });
@@ -457,7 +458,7 @@ router.post('/asignarptoyectoavarios', function (req, res, next) {
         curso.findOne({id_asignatura: req.body.cursos[i].id_asignatura, grupo:req.body.cursos[i].grupo, anno: req.body.anno, periodo: req.body.periodo }, function (err, curso) {
             if (err) {
                 return res.status(500).json({
-                    mensaje: 'Error al modificar el proyecto para una asignatura'+err
+                    mensaje: 'Error al modificar el proyecto para una asignatura '+err
                 });
             }
             if(curso){
@@ -465,7 +466,7 @@ router.post('/asignarptoyectoavarios', function (req, res, next) {
                 curso.save();
             }else{
                 return res.status(500).json({
-                    mensaje: 'Hay un curso que no existe'+err // este curso que no existe esta dentro del array que se manda desde el front
+                    mensaje: 'Hay un curso que no existe '+err // este curso que no existe esta dentro del array que se manda desde el front
                 });
             }
         });
