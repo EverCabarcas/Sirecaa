@@ -543,7 +543,7 @@ router.post('/asignarareaavarios', function (req, res, next) {
 });
 
 router.post('/cursosdeunarea', function (req, res, next) {
-    curso.find({id_area: req.body.id_area, anno: req.body.anno, periodo: req.body.periodo}, function (err, cursos) {
+    curso.find({id_area: req.body.id_area}, function (err, cursos) {
         if (err) {
             return res.status(500).json({
                 mensaje: 'Error al obtener los cursos de esta area '+err
