@@ -6,6 +6,7 @@ var proyecto_docente = require('../models/proyecto_docente');
 var Horario = require('../models/horario');
 var Tema = require('../models/tema');
 var CP = require('../models/comprueba_periodo');
+var auditorgeneral = require('../models/auditor_general');
 var date = new Date();
 var jwt = require('jsonwebtoken');
 var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
@@ -559,6 +560,39 @@ router.post('/cursosdeunarea', function (req, res, next) {
         return res.status(200).json({
             mensaje: cursos
         });
+    });
+});
+
+router.post('/crearauditorgeneral', function (req, res, next) {
+    var audg = new auditorgeneral({
+       id_programa : req.body.id_programa,
+       id_docente: req.body.id_docente,
+       nombre_docente: req.body.nombre_docente
+    });
+    audg.save(function (err, result) {
+        if (err) {
+            return res.status(500).json({
+                mensaje: 'Un error a ocurrido al crear el auditor general'+err
+            });
+        }
+        res.status(201).json({
+            mensaje: 'Auditor general creado con exito'
+        });
+    });
+});
+
+router.post('/auditoresgeneralesprograma', function (req, res, next) {
+    auditorgeneral.find({id_programa: req.body.id_programa}, function (err, docentes) {
+        if (err) {
+            return res.status(500).json({
+                mensaje: 'Un error a ocurrido al buscar los auditores generales '+err
+            });
+        }
+        if(!docentes.length){
+            return res.status(500).json({
+                mensaje: 'No hay auditores generales asociados a este programa'
+            });
+        }
     });
 });
 
