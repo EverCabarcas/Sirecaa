@@ -593,6 +593,11 @@ router.post('/auditoresgeneralesprograma', function (req, res, next) {
                 mensaje: 'No hay auditores generales asociados a este programa'
             });
         }
+
+        return res.status(200).json({
+            mensaje: docentes
+        });
+
     });
 });
 
