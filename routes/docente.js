@@ -26,6 +26,7 @@ router.post('/validaregistros', function (req, res, next) {
     var nowmonth = now.getMonth();
     var tiempo2 = new Date(nowanno,nowmonth, nowday, nowhour, nowminute, nowsecond, 0);
     var asignaturas = [];
+    var Segundos_entre_fechas;
 
     horario.find({id_asignatura: req.body.id_asignatura, grupo: req.body.grupo, periodo: req.body.periodo, anno: req.body.anno}, function (err, horarios) {
         if (err) {
