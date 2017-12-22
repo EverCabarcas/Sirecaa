@@ -3,6 +3,7 @@ var router = express.Router();
 var curso = require('../models/curso');
 var jwt = require('jsonwebtoken');
 var horario = require('../models/horario');
+var mongoose = require('mongoose');
 
 router.use('/', function (req, res, next) {
     jwt.verify(req.query.token_sirecaa, 'sirecaa_secret', function (err, decoded) {
@@ -28,7 +29,7 @@ router.post('/validaregistros', function (req, res, next) {
     var asignaturas = [];
     var Segundos_entre_fechas;
 
-    horario.find({id_asignatura: req.body.id_asignatura, grupo: req.body.grupo, periodo: req.body.periodo, anno: req.body.anno}, function (err, horarios) {
+    horario.find({id_asignatura: mongoose.Types.ObjectId.fromString(req.body.id_asignatura), grupo: req.body.grupo, periodo: req.body.periodo, anno: req.body.anno}, function (err, horarios) {
         if (err) {
             return res.status(500).json({
                 mensaje: 'Error al buscar los horarios '+err
