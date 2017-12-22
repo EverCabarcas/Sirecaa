@@ -57,8 +57,7 @@ router.post('/validaregistros', function (req, res, next) {
                 asignaturas.add(horarios[i].id_asignatura);
             }
             res.status(200).json({
-                message: hym,
-                message2: fecha
+                message: asignaturas
             });
         }
         }
