@@ -62,7 +62,8 @@ router.post('/validaregistros', function (req, res, next) {
                 m1 : Segundos_entre_fechas,
                 m2 : tiempo1,
                 m3 : tiempo2,
-                m4 : a
+                m4 : a,
+                m5 : a.getMonth()
             });
         }
         }
