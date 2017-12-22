@@ -39,25 +39,27 @@ router.post('/validaregistros', function (req, res, next) {
                 mensaje: 'No hay horarios asociados a este curso'
             });
         }
-        for(var i = 0; i < horarios.length; i++){
+        for(var i = 0; i < horarios.length; i++) {
+            if (horarios[i].registro == false) {
             var hym = horarios[i].h_inicio.split(':');
 
             var fecha = horarios[i].fecha.split('-');
 
-            var tiempo1 = new Date(parseInt(fecha[0],10), (parseInt(fecha[1], 10)-1), parseInt(fecha[2]), parseInt(hym[0]), parseInt(hym[1]), 0, 0);
+            var tiempo1 = new Date(parseInt(fecha[0], 10), (parseInt(fecha[1], 10) - 1), parseInt(fecha[2]), parseInt(hym[0]), parseInt(hym[1]), 0, 0);
 
             var dif = tiempo1.getTime() - tiempo2.getTime();
 
             var Segundos_de_T1_a_T2 = dif / 1000;
 
             var Segundos_entre_fechas = Math.abs(Segundos_de_T1_a_T2);
-            if((Segundos_entre_fechas <= 172800) && (horarios[i].registro == false) ){
+            if ((Segundos_entre_fechas <= 172800) && (horarios[i].registro == false)) {
                 asignaturas.add(horarios[i].id_asignatura);
             }
             res.status(200).json({
-                message : hym,
+                message: hym,
                 message2: fecha
             });
+        }
         }
         /*
         res.status(200).json({
