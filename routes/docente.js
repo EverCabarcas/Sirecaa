@@ -25,7 +25,7 @@ router.post('/validaregistros', function (req, res, next) {
     var nowsecond= now.getSeconds();  // Segundo actual
     var nowanno = now.getFullYear();
     var nowmonth = now.getMonth();
-    var tiempo2 = new Date(nowanno,nowmonth, nowday, nowhour, nowminute, nowsecond, 0);
+   // var tiempo2 = new Date(nowanno,nowmonth, nowday, nowhour, nowminute, nowsecond, 0);
     var asignaturas = [];
     var Segundos_entre_fechas;
 
@@ -45,10 +45,10 @@ router.post('/validaregistros', function (req, res, next) {
             var hym = horarios[i].h_inicio.split(':');
 
             var fecha = horarios[i].fecha.split('-');
-             var m = parseInt(fecha[1], 10);
-            var tiempo1 = new Date(parseInt(fecha[0], 10), ( m- 1), parseInt(fecha[2]), parseInt(hym[0]), parseInt(hym[1]), 0, 0);
+             //var m = parseInt(fecha[1], 10);
+            var tiempo1 = new Date(parseInt(fecha[0], 10),parseInt(fecha[1], 10) , parseInt(fecha[2]), parseInt(hym[0]), parseInt(hym[1]), 0, 0);
 
-            var dif = tiempo1.getTime() - tiempo2.getTime();
+            var dif = tiempo1.getTime() - now.getTime();
 
             var Segundos_de_T1_a_T2 = dif / 1000;
 
@@ -61,9 +61,7 @@ router.post('/validaregistros', function (req, res, next) {
                 message: asignaturas,
                 m1 : Segundos_entre_fechas,
                 m2 : tiempo1,
-                m3 : tiempo2,
-                m4 : a,
-                m5 : a.getMonth()
+                m3 : now
             });
         }
         }
