@@ -58,7 +58,9 @@ router.post('/validaregistros', function (req, res, next) {
             }
             res.status(200).json({
                 message: asignaturas,
-                m1 : Segundos_entre_fechas
+                m1 : Segundos_entre_fechas,
+                m2 : tiempo1,
+                m3 : tiempo2
             });
         }
         }
