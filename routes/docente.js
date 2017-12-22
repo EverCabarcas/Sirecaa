@@ -61,8 +61,8 @@ router.post('/validaregistros', function (req, res, next) {
                 message: asignaturas,
                 m1 : Segundos_entre_fechas,
                 m2 : tiempo1,
-                m3 : tiempo2
-                m4 : a.getFullYear()
+                m3 : tiempo2,
+                m4 : a
             });
         }
         }
