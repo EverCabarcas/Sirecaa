@@ -54,9 +54,8 @@ router.post('/validaregistros', function (req, res, next) {
 
             var Segundos_entre_fechas = Math.abs(Segundos_de_T1_a_T2);
             if ((Segundos_entre_fechas <= 172800) && (horarios[i].registro == false)) {
-                asignaturas.add(horarios[i].id_asignatura);
+                asignaturas.add(horarios[i].id_asignatura)
             }
-            var a = new Date();
             return res.status(200).json({
                 message: asignaturas,
                 m1 : Segundos_entre_fechas,
@@ -73,8 +72,5 @@ router.post('/validaregistros', function (req, res, next) {
         });
         */
     });
-
-
-    console.log(Segundos_entre_fechas);
 });
 module.exports = router;
