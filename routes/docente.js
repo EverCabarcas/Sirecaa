@@ -46,7 +46,7 @@ router.post('/validaregistros', function (req, res, next) {
 
             var fecha = horarios[i].fecha.split('-');
              //var m = parseInt(fecha[1], 10);
-            var tiempo1 = new Date(parseInt(fecha[0])-1,parseInt(fecha[1]) -1, parseInt(fecha[2])-1, parseInt(hym[0]), parseInt(hym[1]), 0);
+            var tiempo1 = new Date(Number(fecha[0]),Number(fecha[1]) -1, Number(fecha[2]), Number(hym[0]), Number(hym[1]), 0);
 
             var dif = tiempo1.getTime() - now.getTime();
 
