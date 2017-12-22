@@ -3,7 +3,6 @@ var router = express.Router();
 var curso = require('../models/curso');
 var jwt = require('jsonwebtoken');
 var horario = require('../models/horario');
-var mongoose = require('mongoose');
 
 router.use('/', function (req, res, next) {
     jwt.verify(req.query.token_sirecaa, 'sirecaa_secret', function (err, decoded) {
@@ -54,10 +53,10 @@ router.post('/validaregistros', function (req, res, next) {
 
             var Segundos_entre_fechas = Math.abs(Segundos_de_T1_a_T2);
             if ((Segundos_entre_fechas <= 172800) && (horarios[i].registro == false)) {
-                asignaturas.add(horarios[i].id_asignatura)
+                //asignaturas.add(horarios[i].id_asignatura)
             }
             return res.status(200).json({
-                message: asignaturas,
+                //message: asignaturas,
                 m1 : Segundos_entre_fechas,
                 mm : hym,
                 mmm: fecha,
