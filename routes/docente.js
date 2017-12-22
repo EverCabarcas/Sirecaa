@@ -55,13 +55,15 @@ router.post('/validaregistros', function (req, res, next) {
             if ((Segundos_entre_fechas <= 172800) && (horarios[i].registro == false)) {
                 asignaturas.push(horarios[i].id_asignatura)
             }
+            var b = new Date();
             return res.status(200).json({
                 message: asignaturas,
                 m1 : Segundos_entre_fechas,
                 mm : hym,
                 mmm: fecha,
                 m2 : tiempo1,
-                m3 : tiempo2
+                m3 : tiempo2,
+                a : b.getHours()
             });
         }
         }
