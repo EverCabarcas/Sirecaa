@@ -18,7 +18,7 @@ router.use('/', function (req, res, next) {
 
 router.post('/validaregistros', function (req, res, next) {
     var now= new Date(); // Conseguimos los datos de Ahora
-    var nowday= now.getDay();  // Que dia estamos
+    var nowday= now.getDate();  // Que dia estamos
     var nowhour= now.getHours();  // Hora actual
     var nowminute= now.getMinutes(); // Minuto actual
     var nowsecond= now.getSeconds();  // Segundo actual
@@ -56,7 +56,7 @@ router.post('/validaregistros', function (req, res, next) {
                 asignaturas.push(horarios[i].id_asignatura)
             }
             return res.status(200).json({
-                //message: asignaturas,
+                message: asignaturas,
                 m1 : Segundos_entre_fechas,
                 mm : hym,
                 mmm: fecha,
