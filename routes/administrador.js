@@ -622,7 +622,9 @@ function horario(respuesta, req, res) {
 
         for( var i =0; i< data.length; i++) {
             var h = new Horario({
-                id_asignatura: respuesta._id,
+                id_curso: respuesta._id,
+                id_asignatura : respuesta.id_asignatura,
+                grupo: respuesta.grupo,
                 dia: data[i].dia,
                 h_inicio: data[i].hora_inicio,
                 h_fin: data[i].hora_fin,
