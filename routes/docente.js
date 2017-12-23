@@ -53,7 +53,7 @@ router.post('/validaregistros', function (req, res, next) {
 
             var Segundos_entre_fechas = Math.abs(Segundos_de_T1_a_T2);
             if ((Segundos_entre_fechas <= 172800) && (horarios[i].registro == false)) {
-                asignaturas.push(horarios[i].id_asignatura)
+                asignaturas.push(horarios[i])
             }
             hym = [];
             fecha = [];
