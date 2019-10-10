@@ -3,6 +3,7 @@ var Schema = mongoose.Schema;
 
 var schema = new Schema({
     id_programa: {type: String, required: true},
+    nombre: {type: String, required: true},
     objetivos: [{type: String, required: true}], // esta por verificar
     competencias: [{type: String, required: true}],
     bibliografia: [{type: String, required: true}],

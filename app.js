@@ -9,8 +9,11 @@ var mongoose = require('mongoose');
 var appRoutes = require('./routes/app');
 var docenteRoutes = require('./routes/docente');
 var adminRoutes = require('./routes/administrador');
+var sistemRoutes = require('./routes/sistema');
+var estudianteRoutes = require('./routes/estudiante');
+var auditorRoutes = require('./routes/auditor');
 
-
+// de prueba
 var app = express();
 
 mongoose.connect('mongodb://root:bdatos@ds243295.mlab.com:43295/sirecaa-platform');
@@ -35,6 +38,9 @@ app.use(function(req, res, next) {
     next();
 });
 
+app.use('/sistema', sistemRoutes);
+app.use('/estudiante', estudianteRoutes);
+app.use('/auditor', auditorRoutes);
 app.use('/administrador', adminRoutes);
 app.use('/docente', docenteRoutes);
 app.use('/', appRoutes);
